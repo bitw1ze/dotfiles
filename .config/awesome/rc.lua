@@ -1,0 +1,1 @@
+/home/gabe/.config/awesome/rc.lua

@@ -1,0 +1,7 @@
+[user]
+	name = Gabe Pike
+	email = gpike@isecpartners.com
+[core]
+	editor = vim
+[color]
+	ui = true

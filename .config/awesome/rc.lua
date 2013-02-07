@@ -161,7 +161,7 @@ function hook_fraxbat (tbw, bat)
 
    -- Remaining + Estimated (Dis)Charging Time
    local charge 
-   fh= io.open("/sys/class/power_supply/"..bat.."/charge_full_design", "r")
+   fh= io.open("/sys/class/power_supply/"..bat.."/charge_full", "r")
    if fh ~= nil then
       local full= fh:read()
       fh:close()

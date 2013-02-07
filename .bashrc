@@ -168,7 +168,7 @@ alias idump="sudo mount idump.corp.isecpartners.com:/nfs/public /mnt/idump"
 export ip="([0-9]{1,3}\.){3}[0-9]{1,3}"
 alias grpe='grep'
 export PATH="$PATH:/home/gabe/bin/luatex/tex/texmf-linux-64/bin"
-alias cont='sudo pkill -SIGCONT open'
+alias cont='sudo kill -SIGCONT %%'
 export LESSOPEN="|/usr/bin/lesspipe %s"
 
 PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH

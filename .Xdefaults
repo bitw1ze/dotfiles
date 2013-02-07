@@ -1,0 +1,29 @@
+aterm*loginShell:true
+aterm*transparent:true
+aterm*shading:80
+aterm*background:Black
+aterm*foreground:White
+aterm*scrollBar:false
+aterm*scrollBar_right:true
+aterm*transpscrollbar:true
+aterm*saveLines:32767
+aterm*font:*-*-fixed-medium-r-normal--*-140-*-*-*-*-iso8859-1
+aterm*boldFont:*-*-fixed-bold-r-normal--*-*-140-*-*-*-*-iso8859-1
+
+aterm*cursorColor: #d0d0d0
+aterm*color0: #101010
+aterm*color1: #960050
+aterm*color2: #66aa11
+aterm*color3: #c47f2c
+aterm*color4: #30309b
+aterm*color5: #7e40a5
+aterm*color6: #3579a8
+aterm*color7: #9999aa
+aterm*color8: #303030
+aterm*color9: #ff0090
+aterm*color10: #80ff00
+aterm*color11: #ffba68
+aterm*color12: #5f5fee
+aterm*color13: #bb88dd
+aterm*color14: #4eb4fa
+aterm*color15: #d0d0d0

@@ -8,7 +8,7 @@ require("beautiful")
 require("naughty")
 
 -- Load Debian menu entries
-require("debian.menu")
+require("applications.menu")
 
 -- Load widgets
 vicious = require("vicious")
@@ -91,17 +91,22 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "open terminal", terminal },
-                                    { "chromium", "/usr/bin/chromium-browser" },
-                                    { "thunderbird", "/usr/bin/thunderbird" },
-                                    { "pidgin", "/usr/bin/pidgin" },
-                                    { "skype", "/usr/bin/skype" },
-                                    { "vmware", "/usr/bin/vmware" },
-                                    { "nautilus", "/usr/bin/nautilus" }
-                                  }
-                        })
+mymainmenu = applications.menu.Applications_menu.Applications
+mymainmenu = awful.menu(
+{ items = 
+  { 
+    { "awesome", myawesomemenu, beautiful.awesome_icon },
+    { "applications", applications.menu.Applications_menu.Applications},
+    { "chromium", "/usr/bin/chromium-browser" },
+    { "thunderbird", "/usr/bin/thunderbird", "/usr/share/pixmaps/thunderbird.xpm"},
+    { "pidgin", "/usr/bin/pidgin" },
+    { "skype", "/usr/bin/skype" },
+    { "vmware", "/usr/bin/vmware" },
+    { "Wireshark","/usr/bin/wireshark","/usr/share/pixmaps/wsicon32.xpm"},
+    { "Eclipse","eclipse" },
+    { "nautilus", "/usr/bin/nautilus" },
+  }
+})
 
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })

@@ -84,30 +84,53 @@ end
 
 -- {{{ Menu
 -- Create a laucher widget and a main menu
+office_menu = {
+	{"LibreOffice Calc","/usr/bin/libreoffice --calc","/usr/share/icons/hicolor/32x32/apps/libreoffice-calc.xpm"},
+	{"LibreOffice Impress","/usr/bin/libreoffice --impress","/usr/share/icons/hicolor/32x32/apps/libreoffice-impress.xpm"},
+	{"LibreOffice Writer","/usr/bin/libreoffice --writer","/usr/share/icons/hicolor/32x32/apps/libreoffice-writer.xpm"},
+}
+games_menu = {
+  {"Steam", "/usr/bin/steam"},
+  {"Gnome Solitaire Games","/usr/games/sol","/usr/share/pixmaps/aisleriot.xpm"},
+}
+utils_menu = {
+	{"aRandR","/usr/bin/arandr"},
+  {"Catalyst Control Center","/usr/bin/amdcccle" },
+	{"Character map","/usr/bin/gucharmap"},
+	{"GNOME system monitor","/usr/bin/gnome-system-monitor"},
+	{"pavucontrol","/usr/bin/pavucontrol"},
+	{"Qalculate","/usr/bin/qalculate-gtk"},
+	{"Xkill","xkill"},
+}
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
-   { "quit", awesome.quit }
+   { "logout", awesome.quit },
+   { "reboot", "/usr/bin/gksu /sbin/reboot" },
+   { "shutdown", "/usr/bin/gksu /sbin/halt" },
 }
-
-mymainmenu = applications.menu.Applications_menu.Applications
+favorites_menu = {
+  { "chromium", "/usr/bin/chromium-browser" },
+  { "thunderbird", "/usr/bin/thunderbird", "/usr/share/pixmaps/thunderbird.xpm"},
+  { "pidgin", "/usr/bin/pidgin" },
+  { "skype", "/usr/bin/skype" },
+  { "vmware", "/usr/bin/vmware" },
+  { "sublime", "sublime_text" },
+  { "wireshark","/usr/bin/wireshark","/usr/share/pixmaps/wsicon32.xpm"},
+  { "eclipse","eclipse" },
+  { "nautilus", "/usr/bin/nautilus" },
+}
 mymainmenu = awful.menu(
 { items = 
   { 
+    { "favorites", favorites_menu },
+    { "utils", utils_menu },
+    { "games", games_menu },
+    { "office", office_menu },
     { "awesome", myawesomemenu, beautiful.awesome_icon },
-    { "applications", applications.menu.Applications_menu.Applications},
-    { "chromium", "/usr/bin/chromium-browser" },
-    { "thunderbird", "/usr/bin/thunderbird", "/usr/share/pixmaps/thunderbird.xpm"},
-    { "pidgin", "/usr/bin/pidgin" },
-    { "skype", "/usr/bin/skype" },
-    { "vmware", "/usr/bin/vmware" },
-    { "Wireshark","/usr/bin/wireshark","/usr/share/pixmaps/wsicon32.xpm"},
-    { "Eclipse","eclipse" },
-    { "nautilus", "/usr/bin/nautilus" },
   }
 })
-
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
 -- }}}

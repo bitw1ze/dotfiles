@@ -1,5 +1,5 @@
 aterm*loginShell:true
-aterm*transparent:true
+aterm*transparent:false
 aterm*shading:80
 aterm*background:Black
 aterm*foreground:White
@@ -12,7 +12,7 @@ aterm*boldFont:*-*-fixed-bold-r-normal--*-*-140-*-*-*-*-iso8859-1
 
 aterm*cursorColor: #d0d0d0
 aterm*color0: #101010
-aterm*color1: #960050
+aterm*color1: #ff0000
 aterm*color2: #66aa11
 aterm*color3: #c47f2c
 aterm*color4: #30309b

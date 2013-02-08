@@ -55,18 +55,18 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
-    awful.layout.suit.floating,
+    --awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    --awful.layout.suit.tile.left,
+    --awful.layout.suit.tile.bottom,
+    --awful.layout.suit.tile.top,
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
     awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
+    --awful.layout.suit.max.fullscreen,
+    --awful.layout.suit.magnifier
 }
 -- }}}
 
@@ -75,7 +75,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "main", "vm", "email", "im", "doc", "misc1", "misc2", "misc3", "misc4" }, s, layouts[1])
+    tags[s] = awful.tag({ "main", "alt", "email", "im", "doc", "misc1", "misc2", "misc3", "misc4" }, s, layouts[1])
 end
 -- }}}
 
@@ -92,8 +92,8 @@ games_menu = {
 }
 utils_menu = {
 	{"aRandR","/usr/bin/arandr"},
-  {"Catalyst Control Center","/usr/bin/amdcccle" },
 	{"Character map","/usr/bin/gucharmap"},
+	{"GNOME control center","/usr/bin/gnome-control-center"},
 	{"GNOME system monitor","/usr/bin/gnome-system-monitor"},
 	{"pavucontrol","/usr/bin/pavucontrol"},
 	{"Qalculate","/usr/bin/qalculate-gtk"},
@@ -102,7 +102,7 @@ utils_menu = {
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
+   { "reload", awesome.restart },
    { "logout", awesome.quit },
    { "reboot", "/usr/bin/gksu /sbin/reboot" },
    { "shutdown", "/usr/bin/gksu /sbin/halt" },
@@ -233,9 +233,11 @@ function hook_fraxbat (tbw, bat)
    tbw.text= stat..charge
 end
 
-fraxbat.buttons(fraxbat,{ button({ }, 1, function () hook_fraxbat(fraxbat,'BAT0') end),
-                         button({ }, 2, function () hook_fraxbat(fraxbat,'BAT0') end),
-                         button({ }, 3, function () hook_fraxbat(fraxbat,'BAT0') end) })
+fraxbat.buttons(fraxbat,awful.util.table.join(
+  awful.button({ }, 1, function () hook_fraxbat(fraxbat,'BAT0') end),
+  awful.button({ }, 2, function () hook_fraxbat(fraxbat,'BAT0') end),
+  awful.button({ }, 3, function () hook_fraxbat(fraxbat,'BAT0') end)
+))
 
 -- Create a textclock widget
 mytextclock = awful.widget.textclock({ align = "right" })

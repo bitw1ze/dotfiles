@@ -75,7 +75,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "main", "alt", "email", "im", "doc", "misc1", "misc2", "misc3", "misc4" }, s, layouts[1])
+    tags[s] = awful.tag({ "main", "alt", "vm", "email", "im", "6", "7", "8", "9" }, s, layouts[1])
 end
 -- }}}
 
@@ -112,6 +112,7 @@ favorites_menu = {
   { "thunderbird", "/usr/bin/thunderbird", "/usr/share/pixmaps/thunderbird.xpm"},
   { "pidgin", "/usr/bin/pidgin" },
   { "skype", "/usr/bin/skype" },
+  { "teamviewer", "/usr/bin/teamviewer" },
   { "vmware", "/usr/bin/vmware" },
   { "sublime", "sublime_text" },
   { "wireshark","/usr/bin/wireshark","/usr/share/pixmaps/wsicon32.xpm"},
@@ -528,6 +529,7 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- }}}
 
 -- startup commands
-awful.util.spawn_with_shell("run_once nm-applet");
-awful.util.spawn_with_shell("run_once xautolock -time 5 -locker 'gnome-screensaver-command --lock'")
-awful.util.spawn_with_shell("run_once gnome-keyring-daemon --start")
+awful.util.spawn_with_shell("run-once nm-applet");
+awful.util.spawn_with_shell("run-once xfce4-power-manager")
+-- TODO: make xautolock use --locker 'gnome-screensaver-command --lock' 
+awful.util.spawn_with_shell("run-once xautolock -time 5")

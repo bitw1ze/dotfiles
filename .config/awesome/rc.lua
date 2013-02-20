@@ -139,17 +139,13 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 netwidget = widget({ type = "textbox" })
 -- Register widget
 vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${eth0 down_kb}</span> <span color="#7F9F7F">${eth0 up_kb}</span>', 3)
-dnicon = widget({ type = "imagebox" })
-upicon = widget({ type = "imagebox" }) 
-dnicon.image = image(beautiful.widget_net)
-upicon.image = image(beautiful.widget_netup)
 
 separator = widget({ type = "textbox", name = "separator", alight = "right"})
 separator.text = " :: "
 
+
 -- Create fraxbat widget
 fraxbat = widget({ type = "textbox", name = "fraxbat", align = "right" })
-fraxbat.text = 'fraxbat';
 
 -- Globals used by fraxbat
 fraxbat_st= nil
@@ -189,7 +185,7 @@ function hook_fraxbat (tbw, bat)
    if stat == 'D' then tag= 'i' else tag= 'b' end
 
    -- Remaining + Estimated (Dis)Charging Time
-   local charge 
+   local charge
    fh= io.open("/sys/class/power_supply/"..bat.."/energy_full", "r")
    if fh ~= nil then
       local full= fh:read()
@@ -230,25 +226,27 @@ function hook_fraxbat (tbw, bat)
               fraxbat_now= nil
               fraxbat_est= nil
            end
-           charge=':<'..tag..'>'..tostring(math.ceil((100*now)/full))..'%</'..tag..'>'
+           charge = math.ceil((100*now)/full)
         end
       end
    end
-   tbw.text= charge
+   local charge_color
+   if charge < 20 then
+     charge_color = "red"
+   elseif charge < 40 then
+     charge_color = "orange" 
+   elseif charge < 60 then
+     charge_color = "yellow"
+   elseif charge < 80 then
+     charge_color = "lightgreen"
+   else
+     charge_color = "green"
+   end
+   tbw.text = "<span color='"..charge_color.."'>"..tostring(charge).."%</span>"
 end
 
-myprogressbar = awful.widget.progressbar({align = "right"})
-myprogressbar:set_width(50)
-myprogressbar:set_height(15)
-myprogressbar:set_vertical(false)
-myprogressbar:set_background_color('#494B4F')
-myprogressbar:set_color('#AECF96')
-myprogressbar:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
-myprogressbar:set_value(0.5)
-
 -- Create a textclock widget
-mydate = awful.widget.textclock({ align = "right" }, "%a %b %d", 60)
-mytime = awful.widget.textclock({ align = "right" }, "%I:%M%p", 60)
+mytextclock = awful.widget.textclock({ align = "right" }, "<span color='lightgray'>%a %b %d</span> <span color='cyan'>%I:%M%p</span>", 60)
 
 
 -- Create a systray
@@ -328,15 +326,10 @@ for s = 1, screen.count() do
             mypromptbox[s],
             layout = awful.widget.layout.horizontal.leftright
         },
-        mytime,
-        separator,
-        mydate,
-        separator,
-        myprogressbar,
+        mytextclock,
         separator,
         fraxbat,
-        separator,
-        s == 1 and myprogressbar.widget or nil,
+        s == 1 or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
@@ -541,7 +534,6 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 
 -- startup commands
 awful.util.spawn_with_shell("run-once nm-applet");
---awful.util.spawn_with_shell("run-once xfce4-power-manager")
 -- TODO: make xautolock use --locker 'gnome-screensaver-command --lock' 
 awful.util.spawn_with_shell("run-once xautolock -time 5")
 

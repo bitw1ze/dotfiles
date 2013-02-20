@@ -322,6 +322,7 @@ for s = 1, screen.count() do
         },
         mylayoutbox[s],
         mytextclock,
+        fraxbat,
         --upicon,
         --netwidget,
         --dnicon,

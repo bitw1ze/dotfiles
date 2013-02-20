@@ -6,45 +6,32 @@ require("awful.rules")
 require("beautiful")
 -- Notification library
 require("naughty")
+require("vicious")
 
--- Load widgets
-vicious = require("vicious")
-
--- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+function run_once(prg, args)
+  if not prg then
+    do return nil end
+  end
+  if not args then
+    args=""
+  end
+  awful.util.spawn_with_shell('pgrep -f -u $USER -x ' .. prg .. ' || (' .. prg .. ' ' .. args ..')')
 end
-
--- Handle runtime errors after startup
-do
-    local in_error = false
-    awesome.add_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
-
-        naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
-                         text = err })
-        in_error = false
-    end)
-end
--- }}}
-
+                
 -- {{{ Variable definitions
+--get $HOME from the environement system
+home   = os.getenv("HOME")
+--get XDG_CONFIG
+config_dir = awful.util.getdir("config")
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
+--beautiful.init( config_dir .. "/current_theme/theme.lua")
+beautiful.init("/usr/share/awesome/themes/black_blue/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "/usr/bin/gnome-terminal"
--- editor = os.getenv("EDITOR") or "editor"
-editor = "/usr/bin/vim"
+terminal = "gnome-terminal"
+editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
-
+browser="chromium-browser"
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -52,22 +39,33 @@ editor_cmd = terminal .. " -e " .. editor
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
--- Table of layouts to cover with awful.layout.inc, order matters.
+--Lancement d'applications
+run_once("nm-applet")
+--run_once("xcompmgr",'xcompmgr -CcfF -I "20" -O "10" -D "1" -t "-5" -l "-5" -r "4.2" -o ".82" &')
+run_once("udisks-glue")
+---- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
-    --awful.layout.suit.floating,
+    awful.layout.suit.floating,
+    awful.layout.suit.tile.left,
     awful.layout.suit.tile,
-    --awful.layout.suit.tile.left,
-    --awful.layout.suit.tile.bottom,
-    --awful.layout.suit.tile.top,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
     awful.layout.suit.fair,
     awful.layout.suit.fair.horizontal,
-    --awful.layout.suit.spiral,
-    --awful.layout.suit.spiral.dwindle,
-    --awful.layout.suit.max,
-    --awful.layout.suit.max.fullscreen,
-    --awful.layout.suit.magnifier
+    awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.max,
+    awful.layout.suit.max.fullscreen,
+    awful.layout.suit.magnifier
 }
+-- }}}
+
+-- {{{ naughty theme
+naughty.config.default_preset.font             = beautiful.notify_font 
+naughty.config.default_preset.fg               = beautiful.notify_fg
+naughty.config.default_preset.bg               = beautiful.notify_bg
+naughty.config.presets.normal.border_color     = beautiful.notify_border
 -- }}}
 
 -- {{{ Tags
@@ -75,185 +73,67 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "main", "alt", "vm", "email", "im", "6", "7", "8", "9" }, s, layouts[1])
+    tags[s] = awful.tag({ "1⇋ Main", "2⇋ Alt.", "3⇋ Virtual/vm", "4⇋ Mails/Com.", "5⇋ Misc", "6⇋ Misc"}, s, layouts[1])
 end
--- }}}
 
 -- {{{ Menu
--- Create a laucher widget and a main menu
-office_menu = {
-	{"LibreOffice Calc","/usr/bin/libreoffice --calc","/usr/share/icons/hicolor/32x32/apps/libreoffice-calc.xpm"},
-	{"LibreOffice Impress","/usr/bin/libreoffice --impress","/usr/share/icons/hicolor/32x32/apps/libreoffice-impress.xpm"},
-	{"LibreOffice Writer","/usr/bin/libreoffice --writer","/usr/share/icons/hicolor/32x32/apps/libreoffice-writer.xpm"},
-}
-games_menu = {
-  {"Steam", "/usr/bin/steam"},
-  {"Gnome Solitaire Games","/usr/games/sol","/usr/share/pixmaps/aisleriot.xpm"},
-}
-utils_menu = {
-	{"aRandR","/usr/bin/arandr"},
-	{"Character map","/usr/bin/gucharmap"},
-	{"GNOME control center","/usr/bin/gnome-control-center"},
-	{"GNOME system monitor","/usr/bin/gnome-system-monitor"},
-	{"pavucontrol","/usr/bin/pavucontrol"},
-	{"Qalculate","/usr/bin/qalculate-gtk"},
-	{"Xkill","xkill"},
-}
-myawesomemenu = {
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "reload", awesome.restart },
-   { "logout", awesome.quit },
-   { "reboot", "/usr/bin/gksu /sbin/reboot" },
-   { "shutdown", "/usr/bin/gksu /sbin/halt" },
-}
-favorites_menu = {
-  { "chromium", "/usr/bin/chromium-browser" },
-  { "thunderbird", "/usr/bin/thunderbird", "/usr/share/pixmaps/thunderbird.xpm"},
-  { "pidgin", "/usr/bin/pidgin" },
-  { "skype", "/usr/bin/skype" },
-  { "teamviewer", "/usr/bin/teamviewer" },
-  { "vmware", "/usr/bin/vmware" },
-  { "sublime", "sublime_text" },
-  { "wireshark","/usr/bin/wireshark","/usr/share/pixmaps/wsicon32.xpm"},
-  { "eclipse","eclipse" },
-  { "nautilus", "/usr/bin/nautilus" },
-}
-mymainmenu = awful.menu(
-{ items = 
-  { 
-    { "favorites", favorites_menu },
-    { "utils", utils_menu },
-    { "games", games_menu },
-    { "office", office_menu },
-    { "awesome", myawesomemenu, beautiful.awesome_icon },
-  }
-})
-mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
-                                     menu = mymainmenu })
+--Menu for choose between all your theme
+mythememenu = {}
+function theme_load(theme)
+  local cfg_path = awful.util.getdir("config")
+  -- Create a symlink from the given theme to /home/user/.config/awesome/current_theme
+  awful.util.spawn("ln -sfn " .. cfg_path .. "/themes/" .. theme .. " " .. cfg_path .. "/current_theme")
+  awesome.restart()
+end
+function theme_menu()
+-- List your theme files and feed the menu table
+  local cmd = "ls -1 " .. awful.util.getdir("config") .. "/themes/"
+  local f = io.popen(cmd)
+  for l in f:lines() do
+    local item = { l, function () theme_load(l) end }
+    table.insert(mythememenu, item)
+  end
+  f:close()
+end
+-- Generate your table at startup or restart
+theme_menu()
+-- applications menu
+   require('freedesktop.utils')
+   freedesktop.utils.terminal = terminal  -- default: "xterm"
+   freedesktop.utils.icon_theme = 'gnome' -- look inside /usr/share/icons/, default: nil (don't use icon theme)
+   require('freedesktop.menu')
+   menu_items = freedesktop.menu.new()
+   myawesomemenu = {
+       { "manual", terminal .. " -e man awesome", freedesktop.utils.lookup_icon({ icon = 'help' }) },
+    	 { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua", freedesktop.utils.lookup_icon({ icon = 'package_settings' }) },
+    	 { "themes", mythememenu },
+       { "restart", awesome.restart, freedesktop.utils.lookup_icon({ icon = 'gtk-refresh' }) },
+    	 { "quit", awesome.quit, freedesktop.utils.lookup_icon({ icon = 'gtk-quit' }) }
+      }
+   table.insert(menu_items, { "awesome", myawesomemenu, beautiful.awesome_icon })
+   table.insert(menu_items, { "open terminal", terminal, freedesktop.utils.lookup_icon({icon = 'terminal'}) })
+
+   mymainmenu = awful.menu.new({ items = menu_items, width = 150 })
+   mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,	 menu = mymainmenu })
+-- desktop icons
+   require('freedesktop.desktop')
+   for s = 1, screen.count() do
+	freedesktop.desktop.add_applications_icons({screen = s, showlabels = true})
+	freedesktop.desktop.add_dirs_and_files_icons({screen = s, showlabels = true})
+   end
 -- }}}
 
 -- {{{ Wibox
---  Create network usage widget
--- Initialize widget
-netwidget = widget({ type = "textbox" })
--- Register widget
-vicious.register(netwidget, vicious.widgets.net, '<span color="#CC9393">${eth0 down_kb}</span> <span color="#7F9F7F">${eth0 up_kb}</span>', 3)
-
-separator = widget({ type = "textbox", name = "separator", alight = "right"})
-separator.text = " :: "
-
-
--- Create fraxbat widget
-fraxbat = widget({ type = "textbox", name = "fraxbat", align = "right" })
-
--- Globals used by fraxbat
-fraxbat_st= nil
-fraxbat_ts= nil
-fraxbat_ch= nil
-fraxbat_now = nil
-fraxbat_est= nil
-
--- Function for updating fraxbat
-function hook_fraxbat (tbw, bat)
-   -- Battery Present?
-   local fh= io.open("/sys/class/power_supply/"..bat.."/present", "r")
-   if fh == nil then
-      tbw.text="No Bat"
-      return(nil)
-   end
-   local stat= fh:read()
-   fh:close()
-   if tonumber(stat) < 1 then
-      tbw.text="Bat Not Present"
-      return(nil)
-   end
-
-   -- Status (Charging, Full or Discharging)
-   fh= io.open("/sys/class/power_supply/"..bat.."/status", "r")
-   if fh == nil then
-      tbw.text="N/S"
-      return(nil)
-   end
-   stat= fh:read()
-   fh:close()
-   if stat == 'Full' then
-      tbw.text="100%"
-      return(nil)
-   end
-   stat= string.upper(string.sub(stat, 1, 1))
-   if stat == 'D' then tag= 'i' else tag= 'b' end
-
-   -- Remaining + Estimated (Dis)Charging Time
-   local charge
-   fh= io.open("/sys/class/power_supply/"..bat.."/energy_full", "r")
-   if fh ~= nil then
-      local full= fh:read()
-      fh:close()
-      full= tonumber(full)
-      if full ~= nil then
-        fh= io.open("/sys/class/power_supply/"..bat.."/energy_now", "r")
-        if fh ~= nil then
-           local now= fh:read()
-           local est=0
-           fh:close()
-           if fraxbat_st == stat then
-              delta= os.difftime(os.time(),fraxbat_ts)
-              est= math.abs(fraxbat_ch - now)
-              if delta > 30 and est > 0 then
-                 est= delta/est
-                 if now == fraxbat_now then
-                    est= fraxbat_est
-                 else
-                    fraxbat_est= est
-                    fraxbat_now= now
-                 end
-                 if stat == 'D' then
-                    est= now*est
-                 else
-                    est= (full-now)*est
-                 end
-                 local h= math.floor(est/3600)
-                 est= est - h*3600
-                 est= string.format(',%02d:%02d',h,math.floor(est/60))
-              else
-                 est= 0
-              end
-           else
-              fraxbat_st= stat
-              fraxbat_ts= os.time()
-              fraxbat_ch= now
-              fraxbat_now= nil
-              fraxbat_est= nil
-           end
-           charge = math.ceil((100*now)/full)
-        end
-      end
-   end
-   local charge_color
-   if charge < 20 then
-     charge_color = "red"
-   elseif charge < 40 then
-     charge_color = "orange" 
-   elseif charge < 60 then
-     charge_color = "yellow"
-   elseif charge < 80 then
-     charge_color = "lightgreen"
-   else
-     charge_color = "green"
-   end
-   tbw.text = "<span color='"..charge_color.."'>"..tostring(charge).."%</span>"
-end
-
--- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" }, "<span color='lightgray'>%a %b %d</span> <span color='cyan'>%I:%M%p</span>", 60)
-
+--widget separator
+separator = widget({ type = "textbox", name = "separator"})
+separator.text = " "
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
 
 -- Create a wibox for each screen and add it
-mywibox = {}
+my_top_wibox = {}
+my_bottom_wibox ={}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -316,20 +196,262 @@ for s = 1, screen.count() do
                                               return awful.widget.tasklist.label.currenttags(c, s)
                                           end, mytasklist.buttons)
 
-    -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
+--- {{ Section des Widgets
+--pango
+    pango_small="size=\"small\""
+    pango_x_small="size=\"x-small\""
+    pango_xx_small="size=\"xx-small\""
+    pango_bold="weight=\"bold\""
+--test oocairo
+require("blingbling")
+
+--shutdown widget
+    shutdown=blingbling.system.shutdownmenu(beautiful.shutdown, 
+                                            beautiful.accept, 
+                                            beautiful.cancel)
+    shutdown.resize= false
+    awful.widget.layout.margins[shutdown]={top=4}
+--reboot widget
+    reboot=blingbling.system.rebootmenu(beautiful.reboot, 
+                                        beautiful.accept, 
+                                        beautiful.cancel)
+    reboot.resize = false
+    awful.widget.layout.margins[reboot]={top=4}
+    -- Date
+    datewidget = widget({ type = "textbox" })
+    vicious.register(datewidget, vicious.widgets.date, "<span color=\""..beautiful.text_font_color_1.."\" "..pango_small..">%b %d, %R</span>", 60)
+
+ --Cpu widget 
+  cpulabel= widget({ type = "textbox" })
+  cpulabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..' '..pango_bold..'>CPU: </span>'
+  cpu=blingbling.classical_graph.new()
+  cpu:set_font_size(8)
+  cpu:set_height(16)
+  cpu:set_width(150)
+  cpu:set_show_text(true)
+  cpu:set_label("Load: $percent %")
+  cpu:set_graph_color("#00ccff00")
+  --Use transparency on graph line color to reduce the width of line with low resolution screen
+  cpu:set_graph_line_color("#ff330088")
+  cpu:set_filled(true)
+  cpu:set_h_margin(2)
+  cpu:set_background_color("#00000044")
+  cpu:set_filled_color("#00000099")
+  cpu:set_rounded_size(0.6)
+  vicious.register(cpu, vicious.widgets.cpu, '$1',2)
+ 
+--Cores Widgets
+  corelabel=widget({ type = "textbox" })
+  corelabel.text="<span color=\""..beautiful.textbox_widget_as_label_font_color.."\" "..pango_small..">Cores:</span>"
+  mycore1 = blingbling.value_text_box.new()
+  mycore1:set_width(25)
+  mycore1:set_height(16)
+  mycore1:set_filled(true)
+  mycore1:set_filled_color("#00000099")
+  mycore1:set_rounded_size(0.6)
+  mycore1:set_values_text_color({{"#88aa00ff",0},{"#d4aa00ff", 0.5},{"#d45500ff",0.75}})
+  mycore1:set_font_size(8)
+  mycore1:set_background_color("#00000044")
+  mycore1:set_label("$percent%")
+  vicious.register(mycore1, vicious.widgets.cpu, "$2")
+  
+  mycore2 = blingbling.value_text_box.new()
+  mycore2:set_width(25)
+  mycore2:set_height(16)
+  mycore2:set_filled(true)
+  mycore2:set_filled_color("#00000099")
+  mycore2:set_rounded_size(0.6)
+  mycore2:set_values_text_color({{"#88aa00ff",0},{"#d4aa00ff", 0.5},{"#d45500ff",0.75}})
+  mycore2:set_font_size(8)
+  mycore2:set_background_color("#00000044")
+  mycore2:set_label("$percent%")
+  vicious.register(mycore2, vicious.widgets.cpu, "$3")
+
+  mycore3 = blingbling.value_text_box.new()
+  mycore3:set_width(25)
+  mycore3:set_height(16)
+  mycore3:set_filled(true)
+  mycore3:set_filled_color("#00000099")
+  mycore3:set_rounded_size(0.6)
+  mycore3:set_values_text_color({{"#88aa00ff",0},{"#d4aa00ff", 0.5},{"#d45500ff",0.75}})
+  mycore3:set_font_size(8)
+  mycore3:set_background_color("#00000044")
+  mycore3:set_label("$percent%")
+  vicious.register(mycore3, vicious.widgets.cpu, "$4")
+-- Mem Widget
+  memlabel= widget({ type = "textbox" })
+  memlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>MEM: </span>'
+  
+  memwidget = blingbling.classical_graph.new()
+  memwidget:set_font_size(8)
+  memwidget:set_height(16)
+  memwidget:set_h_margin(2)
+  memwidget:set_width(150)
+  memwidget:set_filled(true)
+  memwidget:set_show_text(true)
+  memwidget:set_filled_color("#00000099")
+  memwidget:set_rounded_size(0.6)
+  --We just want the line of the graph
+  memwidget:set_graph_color("#00ccff00")
+  --Use transparency on graph line color to reduce the width of line with low resolution screen
+  memwidget:set_graph_line_color("#00ccff88")
+  memwidget:set_background_color("#00000044")
+  vicious.register(memwidget, vicious.widgets.mem, "$1", 5)
+
+--task_warrior menu
+ task_warrior=blingbling.task_warrior.new(beautiful.tasks)
+ task_warrior:set_task_done_icon(beautiful.task_done)
+ task_warrior:set_task_icon(beautiful.task)
+ task_warrior:set_project_icon(beautiful.project)
+
+--Mpd widgets
+ mpdlabel= widget({ type = "textbox" })
+ mpdlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>MPD: </span>'
+
+  my_mpd=blingbling.mpd_visualizer.new()
+  my_mpd:set_height(16)
+  my_mpd:set_width(340)
+  my_mpd:update()
+  my_mpd:set_line(true)
+  my_mpd:set_h_margin(2)
+  my_mpd:set_mpc_commands()
+  my_mpd:set_launch_mpd_client(terminal .. " -e ncmpcpp")
+  my_mpd:set_show_text(true)
+  my_mpd:set_font_size(8)
+  my_mpd:set_graph_color("#d4aa00ff")
+  my_mpd:set_label("$artist > $title")
+   
+  my_mpd_volume=blingbling.volume.new()
+  my_mpd_volume:set_height(16)
+  my_mpd_volume:set_width(20)
+  my_mpd_volume:set_v_margin(3)
+  my_mpd_volume:update_mpd()
+  my_mpd_volume:set_bar(true)
+
+--udisks-glue menu
+  udisks_glue=blingbling.udisks_glue.new(beautiful.udisks_glue)
+  udisks_glue:set_mount_icon(beautiful.accept)
+  udisks_glue:set_umount_icon(beautiful.cancel)
+  udisks_glue:set_detach_icon(beautiful.cancel)
+  udisks_glue:set_Usb_icon(beautiful.usb)
+  udisks_glue:set_Cdrom_icon(beautiful.cdrom)
+  awful.widget.layout.margins[udisks_glue.widget]= { top = 4}
+  udisks_glue.widget.resize= false
+--Calendar widget
+  my_cal =blingbling.calendar.new({type = "imagebox", image = beautiful.calendar})
+  my_cal:set_cell_padding(2)
+  my_cal:set_title_font_size(9)
+  my_cal:set_font_size(8)
+  my_cal:set_inter_margin(1)
+  my_cal:set_columns_lines_titles_font_size(8)
+  my_cal:set_columns_lines_titles_text_color("#d4aa00ff")
+
+-- Net Widget
+  netwidget = widget({ type = "textbox", name = "netwidget" })
+  netwidget.text='<span '..pango_small..'><span color="'..beautiful.textbox_widget_as_label_font_color..'">NET:</span></span>'
+  my_net=blingbling.net.new()
+  my_net:set_height(18)
+  my_net:set_width(88)
+  my_net:set_v_margin(3)
+  my_net:set_graph_line_color("#00ccff00")
+  my_net:set_graph_color("#00ccffff")
+  my_net:set_filled_color("#00000055")
+
+  fsrootlabel= widget({ type = "textbox", name = "fsrootlabel" })
+  fsrootlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>disk: </span>'
+  fsroot = blingbling.value_text_box.new()
+  fsroot:set_width(25)
+  fsroot:set_height(16)
+  fsroot:set_filled(true)
+  fsroot:set_filled_color("#00000099")
+  fsroot:set_rounded_size(0.6)
+  fsroot:set_values_text_color({{"#88aa00ff",0},{"#d4aa00ff", 0.5},{"#d45500ff",0.75}})
+  fsroot:set_font_size(8)
+  fsroot:set_background_color("#00000044")
+  fsroot:set_label("$percent%")
+  vicious.register(fsroot, vicious.widgets.fs, "${/ used_p}", 120 )
+
+--Volume
+  volume_label = widget({ type = "textbox"})
+  volume_label.text='<span '..pango_small..'><span color="'..beautiful.textbox_widget_as_label_font_color..'">Vol.: </span></span>'
+  my_volume=blingbling.volume.new()
+  my_volume:set_height(16)
+  my_volume:set_v_margin(3)
+  my_volume:set_width(20)
+  my_volume:update_master()
+  my_volume:set_master_control()
+  my_volume:set_bar(true)
+  my_volume:set_background_graph_color("#00000099")
+  my_volume:set_graph_color("#00ccffaa")
+-- wiboxs
+    my_top_wibox[s] = awful.wibox({ position = "top", screen = s, height=20 })
+    
     -- Add widgets to the wibox - order matters
-    mywibox[s].widgets = {
+    my_top_wibox[s].widgets = {
+              {
+                separator,
+	              cpulabel,
+                cpu.widget,
+                separator,
+	              corelabel,
+	              mycore1.widget,
+	              mycore2.widget,
+                separator,
+	              memlabel,
+                memwidget.widget,
+	              separator,
+	              udisks_glue.widget,
+                separator,
+                fsrootlabel,
+                fsroot.widget,
+                separator,
+                mpdlabel,
+                separator,
+                my_mpd_volume,
+                separator,
+                my_mpd.widget,
+                separator,
+                layout = awful.widget.layout.horizontal.leftright
+	            },
+              separator,
+              mylayoutbox[s],
+	            separator,
+	            datewidget, 
+              separator,
+              my_cal.widget,
+              separator,
+              task_warrior.widget,
+              separator,
+	            s == 1 and mysystray or nil,
+              separator,
+              my_net.widget,
+              netwidget,
+              separator,
+              my_volume.widget,
+              volume_label,
+              layout = awful.widget.layout.horizontal.rightleft
+    }
+
+    my_bottom_wibox[s] = awful.wibox({ position= "top",screen = s, height = 16 })
+    awful.screen.padding(screen[s],{top = 24})
+    my_bottom_wibox[s].x=0
+    my_bottom_wibox[s].y=20
+    my_bottom_wibox[s].widgets = {
         {
-            mylauncher,
+	          separator,
             mytaglist[s],
+	          separator,
             mypromptbox[s],
+	          separator,
             layout = awful.widget.layout.horizontal.leftright
         },
-        mytextclock,
+	      separator,
+        --shutdown,
         separator,
-        fraxbat,
-        s == 1 or nil,
+        reboot,
+        separator,
+
+        separator,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
@@ -391,7 +513,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
-
+--    awful.key({ "#151",        }, "c",     function () awful.util.spawn(browser)     end),
+--    awful.key({ modkey, "Mod1"       }, "t",     function () awful.util.spawn("thunderbird") end),
+--    awful.key({ modkey, "Mod1"       }, "v",     function () awful.util.spawn("vmware")  end),
+--    awful.key({ modkey, "Mod1"       }, "p",     function () awful.util.spawn("pidgin")      end),
+--    awful.key({ modkey, "Mod1"       }, "s",     function () awful.util.spawn("skype")      end),
+--    awful.key({ modkey, "Mod1"       }, "n",     function () awful.util.spawn("nautilus")      end),
+--    awful.key({ modkey, "Mod1"       }, "w",     function () awful.util.spawn("wireshark")      end),
+--    awful.key({ modkey, "Modk"       }, "e",     function () awful.util.spawn("sublime_text")      end),
+    
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
 
@@ -401,14 +531,7 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end),
-    -- Lock screen
-    awful.key(
-        { "Mod1", "Control" },
-        "l",
-        function ()
-            awful.util.spawn("gnome-screensaver-command --lock")
-        end)
+              end)
 )
 
 clientkeys = awful.util.table.join(
@@ -491,14 +614,31 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
-    { rule = { class = "pinentry" },
-      properties = { floating = true } },
+    { rule = { class = "Firefox"},
+      properties = { tag = tags[1][3], switchtotag = true } },
+    { rule = { class = "Chromium"},
+      properties = { tag = tags[1][3], switchtotag = true } },
+    { rule = { name = "luakit"},
+      properties = { tag = tags[1][3], switchtotag = true } },
+    { rule = { class = "Eclipse" },
+      properties = { tag = tags[1][2], switchtotag = true } },
+    { rule = { class = "Bluefish" },
+      properties = { tag = tags[1][2], switchtotag = true } },
+    { rule = { class = "Geany" },
+      properties = { tag = tags[1][2], switchtotag = true } },
     { rule = { class = "gimp" },
-      properties = { floating = true } },
-    -- Set Firefox to always map on tags number 2 of screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
-}
+      properties = { tag = tags[1][8], switchtotag = true , floating = true} },
+    { rule = { class = "Ncmpc++" , instance = "gnome-terminal"},
+      properties = { tag = tags[1][5], switchtotag = true } },
+    { rule = { class = "Inkscape" },
+      properties = { tag = tags[1][7], switchtotag = true, maximized_vertical = true, maximized_horizontal = true } },
+    { rule = { class = "VirtualBox" },
+      properties = { tag = tags[1][6], switchtotag = true } },
+    { rule = { class = "Thunderbird" },
+      properties = { tag = tags[1][4], switchtotag = false } },
+    { rule = { class = "Apache Directory Studio" },
+      properties = { tag = tags[1][2], switchtotag = true } },
+}	
 -- }}}
 
 -- {{{ Signals
@@ -531,14 +671,3 @@ end)
 client.add_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.add_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
--- startup commands
-awful.util.spawn_with_shell("run-once nm-applet");
--- TODO: make xautolock use --locker 'gnome-screensaver-command --lock' 
-awful.util.spawn_with_shell("run-once xautolock -time 5")
-
--- set up timer for 
-fraxtimer = timer({timeout = 30})
-fraxtimer:add_signal("timeout", function () hook_fraxbat(fraxbat, 'BAT0') end)
-fraxtimer:start()
-fraxtimer:emit_signal("timeout")

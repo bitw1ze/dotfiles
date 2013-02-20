@@ -241,7 +241,7 @@ fraxbat.buttons(fraxbat,awful.util.table.join(
 ))
 
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" })
+mytextclock = awful.widget.textclock({ align = "right" }, "%a %b %d | %I:%M%p", 60)
 
 -- Create a systray
 mysystray = widget({ type = "systray" })

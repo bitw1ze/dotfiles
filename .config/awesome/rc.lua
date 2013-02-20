@@ -144,6 +144,9 @@ upicon = widget({ type = "imagebox" })
 dnicon.image = image(beautiful.widget_net)
 upicon.image = image(beautiful.widget_netup)
 
+separator = widget({ type = "textbox", name = "separator", alight = "right"})
+separator.text = " :: "
+
 -- Create fraxbat widget
 fraxbat = widget({ type = "textbox", name = "fraxbat", align = "right" })
 fraxbat.text = 'fraxbat';
@@ -231,17 +234,22 @@ function hook_fraxbat (tbw, bat)
         end
       end
    end
-   tbw.text= stat..charge
+   tbw.text= charge
 end
 
-fraxbat.buttons(fraxbat,awful.util.table.join(
-  awful.button({ }, 1, function () hook_fraxbat(fraxbat,'BAT0') end),
-  awful.button({ }, 2, function () hook_fraxbat(fraxbat,'BAT0') end),
-  awful.button({ }, 3, function () hook_fraxbat(fraxbat,'BAT0') end)
-))
+myprogressbar = awful.widget.progressbar({align = "right"})
+myprogressbar:set_width(50)
+myprogressbar:set_height(15)
+myprogressbar:set_vertical(false)
+myprogressbar:set_background_color('#494B4F')
+myprogressbar:set_color('#AECF96')
+myprogressbar:set_gradient_colors({ '#AECF96', '#88A175', '#FF5656' })
+myprogressbar:set_value(0.5)
 
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" }, "%a %b %d | %I:%M%p", 60)
+mydate = awful.widget.textclock({ align = "right" }, "%a %b %d", 60)
+mytime = awful.widget.textclock({ align = "right" }, "%I:%M%p", 60)
+
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -320,13 +328,15 @@ for s = 1, screen.count() do
             mypromptbox[s],
             layout = awful.widget.layout.horizontal.leftright
         },
-        mylayoutbox[s],
-        mytextclock,
+        mytime,
+        separator,
+        mydate,
+        separator,
+        myprogressbar,
+        separator,
         fraxbat,
-        --upicon,
-        --netwidget,
-        --dnicon,
-        s == 1 and mysystray or nil,
+        separator,
+        s == 1 and myprogressbar.widget or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
     }
@@ -531,6 +541,12 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 
 -- startup commands
 awful.util.spawn_with_shell("run-once nm-applet");
-awful.util.spawn_with_shell("run-once xfce4-power-manager")
+--awful.util.spawn_with_shell("run-once xfce4-power-manager")
 -- TODO: make xautolock use --locker 'gnome-screensaver-command --lock' 
 awful.util.spawn_with_shell("run-once xautolock -time 5")
+
+-- set up timer for 
+fraxtimer = timer({timeout = 30})
+fraxtimer:add_signal("timeout", function () hook_fraxbat(fraxbat, 'BAT0') end)
+fraxtimer:start()
+fraxtimer:emit_signal("timeout")

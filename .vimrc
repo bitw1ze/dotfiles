@@ -110,3 +110,6 @@ set expandtab
 set ts=2
 
 set tags=tags;
+
+nmap j gj
+nmap k gk

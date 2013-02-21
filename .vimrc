@@ -113,3 +113,5 @@ set tags=tags;
 
 nmap j gj
 nmap k gk
+
+colorscheme desert

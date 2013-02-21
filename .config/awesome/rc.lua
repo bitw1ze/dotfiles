@@ -267,10 +267,10 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
   vicious.register(memwidget, vicious.widgets.mem, "$1", 5)
 
 --task_warrior menu
- task_warrior=blingbling.task_warrior.new(beautiful.tasks)
- task_warrior:set_task_done_icon(beautiful.task_done)
- task_warrior:set_task_icon(beautiful.task)
- task_warrior:set_project_icon(beautiful.project)
+-- task_warrior=blingbling.task_warrior.new(beautiful.tasks)
+-- task_warrior:set_task_done_icon(beautiful.task_done)
+-- task_warrior:set_task_icon(beautiful.task)
+-- task_warrior:set_project_icon(beautiful.project)
 
 ----Mpd widgets
 -- mpdlabel= widget({ type = "textbox" })
@@ -330,17 +330,17 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
   vicious.register(fsroot, vicious.widgets.fs, "${/ used_p}", 120 )
 
 --Volume
-  volume_label = widget({ type = "textbox"})
-  volume_label.text='<span '..pango_small..'><span color="'..beautiful.textbox_widget_as_label_font_color..'">Vol.: </span></span>'
-  my_volume=blingbling.volume.new()
-  my_volume:set_height(16)
-  my_volume:set_v_margin(3)
-  my_volume:set_width(20)
-  my_volume:update_master()
-  my_volume:set_master_control()
-  my_volume:set_bar(true)
-  my_volume:set_background_graph_color("#00000099")
-  my_volume:set_graph_color("#00ccffaa")
+--  volume_label = widget({ type = "textbox"})
+--  volume_label.text='<span '..pango_small..'><span color="'..beautiful.textbox_widget_as_label_font_color..'">Vol.: </span></span>'
+--  my_volume=blingbling.volume.new()
+--  my_volume:set_height(16)
+--  my_volume:set_v_margin(3)
+--  my_volume:set_width(20)
+--  my_volume:update_master()
+--  my_volume:set_master_control()
+--  my_volume:set_bar(true)
+--  my_volume:set_background_graph_color("#00000099")
+--  my_volume:set_graph_color("#00ccffaa")
 -- wiboxs
     my_top_wibox[s] = awful.wibox({ position = "top", screen = s, height=20 })
     
@@ -374,14 +374,14 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
               separator,
               my_cal.widget,
               separator,
-              task_warrior.widget,
-              separator,
+              --task_warrior.widget,
+              --separator,
 	            s == 1 and mysystray or nil,
               separator,
               s == 1 and batwidget or nil,
               separator,
-              my_volume.widget,
-              volume_label,
+              --my_volume.widget,
+              --volume_label,
               layout = awful.widget.layout.horizontal.rightleft
     }
 
@@ -399,7 +399,7 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
             layout = awful.widget.layout.horizontal.leftright
         },
 	      separator,
-        --shutdown,
+        shutdown,
         separator,
         reboot,
         separator,

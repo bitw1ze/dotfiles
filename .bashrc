@@ -174,3 +174,4 @@ export LESSOPEN="|/usr/bin/lesspipe %s"
 PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
 export EDITOR="/usr/bin/vim"
 #setxkbmap -option ctrl:nocaps
+export XDG_CONFIG_HOME="$HOME/.config"

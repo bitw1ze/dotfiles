@@ -205,6 +205,20 @@ for s = 1, screen.count() do
 --test oocairo
 require("blingbling")
 
+batwidget = widget({type = "textbox"})
+batwidget=blingbling.progress_bar.new()
+batwidget:set_height(18)
+batwidget:set_width(50)
+batwidget:set_horizontal(true)
+batwidget:set_show_text(true)
+batwidget:set_font_size(10)
+batwidget:set_label("$percent%")
+batwidget:set_graph_color("#1AE000")
+batwidget:set_background_graph_color("#FF0000")
+batwidget:set_background_text_color("#FFFFFFA0")
+batwidget:set_text_color("#000000")
+vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
+
 --shutdown widget
     shutdown=blingbling.system.shutdownmenu(beautiful.shutdown, 
                                             beautiful.accept, 
@@ -219,7 +233,7 @@ require("blingbling")
     awful.widget.layout.margins[reboot]={top=4}
     -- Date
     datewidget = widget({ type = "textbox" })
-    vicious.register(datewidget, vicious.widgets.date, "<span color=\""..beautiful.text_font_color_1.."\" "..pango_small..">%b %d, %R</span>", 60)
+    vicious.register(datewidget, vicious.widgets.date, "<span color=\""..beautiful.text_font_color_1.."\" "..pango_small..">%R</span>", 60)
 
  --Cpu widget 
   cpulabel= widget({ type = "textbox" })
@@ -238,46 +252,8 @@ require("blingbling")
   cpu:set_background_color("#00000044")
   cpu:set_filled_color("#00000099")
   cpu:set_rounded_size(0.6)
-  vicious.register(cpu, vicious.widgets.cpu, '$1',2)
+  vicious.register(cpu, vicious.widgets.cpu, '$1',7,"BAT0")
  
---Cores Widgets
-  corelabel=widget({ type = "textbox" })
-  corelabel.text="<span color=\""..beautiful.textbox_widget_as_label_font_color.."\" "..pango_small..">Cores:</span>"
-  mycore1 = blingbling.value_text_box.new()
-  mycore1:set_width(25)
-  mycore1:set_height(16)
-  mycore1:set_filled(true)
-  mycore1:set_filled_color("#00000099")
-  mycore1:set_rounded_size(0.6)
-  mycore1:set_values_text_color({{"#88aa00ff",0},{"#d4aa00ff", 0.5},{"#d45500ff",0.75}})
-  mycore1:set_font_size(8)
-  mycore1:set_background_color("#00000044")
-  mycore1:set_label("$percent%")
-  vicious.register(mycore1, vicious.widgets.cpu, "$2")
-  
-  mycore2 = blingbling.value_text_box.new()
-  mycore2:set_width(25)
-  mycore2:set_height(16)
-  mycore2:set_filled(true)
-  mycore2:set_filled_color("#00000099")
-  mycore2:set_rounded_size(0.6)
-  mycore2:set_values_text_color({{"#88aa00ff",0},{"#d4aa00ff", 0.5},{"#d45500ff",0.75}})
-  mycore2:set_font_size(8)
-  mycore2:set_background_color("#00000044")
-  mycore2:set_label("$percent%")
-  vicious.register(mycore2, vicious.widgets.cpu, "$3")
-
-  mycore3 = blingbling.value_text_box.new()
-  mycore3:set_width(25)
-  mycore3:set_height(16)
-  mycore3:set_filled(true)
-  mycore3:set_filled_color("#00000099")
-  mycore3:set_rounded_size(0.6)
-  mycore3:set_values_text_color({{"#88aa00ff",0},{"#d4aa00ff", 0.5},{"#d45500ff",0.75}})
-  mycore3:set_font_size(8)
-  mycore3:set_background_color("#00000044")
-  mycore3:set_label("$percent%")
-  vicious.register(mycore3, vicious.widgets.cpu, "$4")
 -- Mem Widget
   memlabel= widget({ type = "textbox" })
   memlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>MEM: </span>'
@@ -304,29 +280,29 @@ require("blingbling")
  task_warrior:set_task_icon(beautiful.task)
  task_warrior:set_project_icon(beautiful.project)
 
---Mpd widgets
- mpdlabel= widget({ type = "textbox" })
- mpdlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>MPD: </span>'
-
-  my_mpd=blingbling.mpd_visualizer.new()
-  my_mpd:set_height(16)
-  my_mpd:set_width(340)
-  my_mpd:update()
-  my_mpd:set_line(true)
-  my_mpd:set_h_margin(2)
-  my_mpd:set_mpc_commands()
-  my_mpd:set_launch_mpd_client(terminal .. " -e ncmpcpp")
-  my_mpd:set_show_text(true)
-  my_mpd:set_font_size(8)
-  my_mpd:set_graph_color("#d4aa00ff")
-  my_mpd:set_label("$artist > $title")
-   
-  my_mpd_volume=blingbling.volume.new()
-  my_mpd_volume:set_height(16)
-  my_mpd_volume:set_width(20)
-  my_mpd_volume:set_v_margin(3)
-  my_mpd_volume:update_mpd()
-  my_mpd_volume:set_bar(true)
+----Mpd widgets
+-- mpdlabel= widget({ type = "textbox" })
+-- mpdlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>MPD: </span>'
+--
+--  my_mpd=blingbling.mpd_visualizer.new()
+--  my_mpd:set_height(16)
+--  my_mpd:set_width(340)
+--  my_mpd:update()
+--  my_mpd:set_line(true)
+--  my_mpd:set_h_margin(2)
+--  my_mpd:set_mpc_commands()
+--  my_mpd:set_launch_mpd_client(terminal .. " -e ncmpcpp")
+--  my_mpd:set_show_text(true)
+--  my_mpd:set_font_size(8)
+--  my_mpd:set_graph_color("#d4aa00ff")
+--  my_mpd:set_label("$artist > $title")
+--   
+--  my_mpd_volume=blingbling.volume.new()
+--  my_mpd_volume:set_height(16)
+--  my_mpd_volume:set_width(20)
+--  my_mpd_volume:set_v_margin(3)
+--  my_mpd_volume:update_mpd()
+--  my_mpd_volume:set_bar(true)
 
 --udisks-glue menu
   udisks_glue=blingbling.udisks_glue.new(beautiful.udisks_glue)
@@ -341,22 +317,12 @@ require("blingbling")
   my_cal =blingbling.calendar.new({type = "imagebox", image = beautiful.calendar})
   my_cal:set_cell_padding(2)
   my_cal:set_title_font_size(9)
-  my_cal:set_font_size(8)
+  my_cal:set_font_size(10)
   my_cal:set_inter_margin(1)
   my_cal:set_columns_lines_titles_font_size(8)
   my_cal:set_columns_lines_titles_text_color("#d4aa00ff")
 
--- Net Widget
-  netwidget = widget({ type = "textbox", name = "netwidget" })
-  netwidget.text='<span '..pango_small..'><span color="'..beautiful.textbox_widget_as_label_font_color..'">NET:</span></span>'
-  my_net=blingbling.net.new()
-  my_net:set_height(18)
-  my_net:set_width(88)
-  my_net:set_v_margin(3)
-  my_net:set_graph_line_color("#00ccff00")
-  my_net:set_graph_color("#00ccffff")
-  my_net:set_filled_color("#00000055")
-
+--disk usage widget
   fsrootlabel= widget({ type = "textbox", name = "fsrootlabel" })
   fsrootlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>disk: </span>'
   fsroot = blingbling.value_text_box.new()
@@ -393,10 +359,6 @@ require("blingbling")
 	              cpulabel,
                 cpu.widget,
                 separator,
-	              corelabel,
-	              mycore1.widget,
-	              mycore2.widget,
-                separator,
 	              memlabel,
                 memwidget.widget,
 	              separator,
@@ -405,12 +367,12 @@ require("blingbling")
                 fsrootlabel,
                 fsroot.widget,
                 separator,
-                mpdlabel,
-                separator,
-                my_mpd_volume,
-                separator,
-                my_mpd.widget,
-                separator,
+--                mpdlabel,
+--                separator,
+--                my_mpd_volume,
+--                separator,
+--                my_mpd.widget,
+--                separator,
                 layout = awful.widget.layout.horizontal.leftright
 	            },
               separator,
@@ -424,8 +386,7 @@ require("blingbling")
               separator,
 	            s == 1 and mysystray or nil,
               separator,
-              my_net.widget,
-              netwidget,
+              s == 1 and batwidget or nil,
               separator,
               my_volume.widget,
               volume_label,

@@ -65,7 +65,7 @@ naughty.config.presets.normal.border_color     = beautiful.notify_border
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "1⇋ Main", "2⇋ Alt.", "3⇋ Virtual/vm", "4⇋ Mails/Com.", "5⇋ Misc", "6⇋ Misc"}, s, layouts[1])
+    tags[s] = awful.tag({ "1⇋ Main", "2⇋ Alt", "3⇋ Virtual", "4⇋ Comm", "5⇋ Misc", "6⇋ Misc"}, s, layouts[1])
 end
 
 -- {{{ Menu

@@ -225,7 +225,10 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
     awful.widget.layout.margins[reboot]={top=4}
     -- Date
     datewidget = widget({ type = "textbox" })
-    vicious.register(datewidget, vicious.widgets.date, "<span color=\""..beautiful.text_font_color_1.."\" "..pango_small..">%R</span>", 60)
+    --vicious.register(datewidget, vicious.widgets.date, "<span color=\""..beautiful.text_font_color_1.."\" "..pango_small..">%R</span>", 60)
+
+    mytextclock = awful.widget.textclock({ align = "right" }, "<span color='white'>%I:%M%p</span>", 60)
+
 
  --Cpu widget 
   cpulabel= widget({ type = "textbox" })
@@ -370,7 +373,8 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
               separator,
               mylayoutbox[s],
 	            separator,
-	            datewidget, 
+              mytextclock,
+	            --datewidget, 
               separator,
               my_cal.widget,
               separator,

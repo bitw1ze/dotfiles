@@ -5,7 +5,3 @@
 	editor = vim
 [color]
 	ui = true
-[merge]
-  tool = git-diff-wrapper
-[diff]
-  external = git_diff_wrapper

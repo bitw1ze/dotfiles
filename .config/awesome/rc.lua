@@ -115,20 +115,10 @@ mymainmenu = awful.menu(
     { "awesome", myawesomemenu, beautiful.awesome_icon },
   }
 })
-mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
-                                     menu = mymainmenu })
 
 -- {{{ Wibox
---widget separator
-separator = widget({ type = "textbox", name = "separator"})
-separator.text = " "
-
--- Create a systray
-mysystray = widget({ type = "systray" })
-
 -- Create a wibox for each screen and add it
-my_top_wibox = {}
-my_bottom_wibox ={}
+mywibox = {}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -192,6 +182,14 @@ for s = 1, screen.count() do
                                           end, mytasklist.buttons)
 
 --- {{ Section des Widgets
+-- Create separator widget
+separator = widget({ type = "textbox", name = "separator"})
+separator.text = " "
+
+-- Create a systray
+mysystray = widget({ type = "systray" })
+
+
 --pango
     pango_small="size=\"small\""
     pango_x_small="size=\"x-small\""
@@ -200,9 +198,10 @@ for s = 1, screen.count() do
 --test oocairo
 require("blingbling")
 
+local widget_height = 22 
 batwidget = widget({type = "textbox"})
 batwidget=blingbling.progress_bar.new()
-batwidget:set_height(18)
+batwidget:set_height(widget_height)
 batwidget:set_width(50)
 batwidget:set_horizontal(true)
 batwidget:set_show_text(true)
@@ -226,7 +225,7 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
   cpulabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..' '..pango_bold..'>CPU: </span>'
   cpu=blingbling.classical_graph.new()
   cpu:set_font_size(8)
-  cpu:set_height(16)
+  cpu:set_height(widget_height)
   cpu:set_width(75)
   cpu:set_show_text(true)
   cpu:set_label("Load: $percent %")
@@ -246,7 +245,7 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
   
   memwidget = blingbling.classical_graph.new()
   memwidget:set_font_size(8)
-  memwidget:set_height(16)
+  memwidget:set_height(widget_height)
   memwidget:set_h_margin(2)
   memwidget:set_width(75)
   memwidget:set_filled(true)
@@ -313,7 +312,7 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
   fsrootlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>disk: </span>'
   fsroot = blingbling.value_text_box.new()
   fsroot:set_width(25)
-  fsroot:set_height(16)
+  fsroot:set_height(widget_height)
   fsroot:set_filled(true)
   fsroot:set_filled_color("#00000099")
   fsroot:set_rounded_size(0.6)
@@ -336,11 +335,14 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
 --  my_volume:set_background_graph_color("#00000099")
 --  my_volume:set_graph_color("#00ccffaa")
 -- wiboxs
-    my_top_wibox[s] = awful.wibox({ position = "top", screen = s, height=20 })
+    mywibox[s] = awful.wibox({ position = "top", screen = s, height=24 })
     
     -- Add widgets to the wibox - order matters
-    my_top_wibox[s].widgets = {
+    mywibox[s].widgets = {
               {
+                mytaglist[s],
+                separator,
+                mypromptbox[s],
                 separator,
 	              cpulabel,
                 cpu.widget,
@@ -353,6 +355,8 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
                 fsrootlabel,
                 fsroot.widget,
                 separator,
+                batwidget,
+                separator,
 --                mpdlabel,
 --                separator,
 --                my_mpd_volume,
@@ -362,8 +366,6 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
                 layout = awful.widget.layout.horizontal.leftright
 	            },
               separator,
-              mylayoutbox[s],
-	            separator,
               mytextclock,
 	            --datewidget, 
               separator,
@@ -373,30 +375,13 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
               --separator,
 	            s == 1 and mysystray or nil,
               separator,
-              s == 1 and batwidget or nil,
+              mytasklist[s],
               separator,
               --my_volume.widget,
               --volume_label,
               layout = awful.widget.layout.horizontal.rightleft
     }
 
-    my_bottom_wibox[s] = awful.wibox({ position= "top",screen = s, height = 16 })
-    awful.screen.padding(screen[s],{top = 24})
-    my_bottom_wibox[s].x=0
-    my_bottom_wibox[s].y=20
-    my_bottom_wibox[s].widgets = {
-        {
-	          separator,
-            mytaglist[s],
-	          separator,
-            mypromptbox[s],
-	          separator,
-            layout = awful.widget.layout.horizontal.leftright
-        },
-        separator,
-        mytasklist[s],
-        layout = awful.widget.layout.horizontal.rightleft
-    }
 end
 -- }}}
 
@@ -563,10 +548,10 @@ awful.rules.rules = {
     { rule = { class = "Chromium"},
       properties = { tag = tags[1][2], switchtotag = true } },
     { rule = { class = "Eclipse" },
-      properties = { tag = tags[1][2], switchtotag = true } },
-    { rule = { class = "VirtualBox" },
+      properties = { tag = tags[1][3], switchtotag = true } },
+    { rule = { instance = "virtualbox" },
       properties = { tag = tags[1][3], switchtotag = false} },
-    { rule = { class = "VMWare" },
+    { rule = { instance = "vmware" },
       properties = { tag = tags[1][3], switchtotag = false} },
     { rule = { class = "Thunderbird" },
       properties = { tag = tags[1][4], switchtotag = false } },

@@ -67,53 +67,56 @@ for s = 1, screen.count() do
     -- Each screen has its own tag table.
     tags[s] = awful.tag({ "1⇋ Main", "2⇋ Alt", "3⇋ Virtual", "4⇋ Comm", "5⇋ Misc", "6⇋ Misc"}, s, layouts[1])
 end
-
+--
 -- {{{ Menu
---Menu for choose between all your theme
-mythememenu = {}
-function theme_load(theme)
-  local cfg_path = awful.util.getdir("config")
-  -- Create a symlink from the given theme to /home/user/.config/awesome/current_theme
-  awful.util.spawn("ln -sfn " .. cfg_path .. "/themes/" .. theme .. " " .. cfg_path .. "/current_theme")
-  awesome.restart()
-end
-function theme_menu()
--- List your theme files and feed the menu table
-  local cmd = "ls -1 " .. awful.util.getdir("config") .. "/themes/"
-  local f = io.popen(cmd)
-  for l in f:lines() do
-    local item = { l, function () theme_load(l) end }
-    table.insert(mythememenu, item)
-  end
-  f:close()
-end
--- Generate your table at startup or restart
-theme_menu()
--- applications menu
-   require('freedesktop.utils')
-   freedesktop.utils.terminal = terminal  -- default: "xterm"
-   freedesktop.utils.icon_theme = 'gnome' -- look inside /usr/share/icons/, default: nil (don't use icon theme)
-   require('freedesktop.menu')
-   menu_items = freedesktop.menu.new()
-   myawesomemenu = {
-       { "manual", terminal .. " -e man awesome", freedesktop.utils.lookup_icon({ icon = 'help' }) },
-    	 { "edit config", editor_cmd .. " " .. awful.util.getdir("config") .. "/rc.lua", freedesktop.utils.lookup_icon({ icon = 'package_settings' }) },
-    	 { "themes", mythememenu },
-       { "restart", awesome.restart, freedesktop.utils.lookup_icon({ icon = 'gtk-refresh' }) },
-    	 { "quit", awesome.quit, freedesktop.utils.lookup_icon({ icon = 'gtk-quit' }) }
-      }
-   table.insert(menu_items, { "awesome", myawesomemenu, beautiful.awesome_icon })
-   table.insert(menu_items, { "open terminal", terminal, freedesktop.utils.lookup_icon({icon = 'terminal'}) })
+-- Create a laucher widget and a main menu
+office_menu = {
+	{"LibreOffice Calc","/usr/bin/libreoffice --calc","/usr/share/icons/hicolor/32x32/apps/libreoffice-calc.xpm"},
+	{"LibreOffice Impress","/usr/bin/libreoffice --impress","/usr/share/icons/hicolor/32x32/apps/libreoffice-impress.xpm"},
+	{"LibreOffice Writer","/usr/bin/libreoffice --writer","/usr/share/icons/hicolor/32x32/apps/libreoffice-writer.xpm"},
+}
+utils_menu = {
+	{"aRandR","/usr/bin/arandr"},
+	{"Character map","/usr/bin/gucharmap"},
+	{"GNOME control center","/usr/bin/gnome-control-center"},
+	{"GNOME system monitor","/usr/bin/gnome-system-monitor"},
+	{"pavucontrol","/usr/bin/pavucontrol"},
+	{"Qalculate","/usr/bin/qalculate-gtk"},
+	{"Xkill","xkill"},
+}
+myawesomemenu = {
+   { "manual", terminal .. " -e man awesome" },
+   { "edit config", editor_cmd .. " " .. awesome.conffile },
+   { "reload", awesome.restart },
+   { "logout", awesome.quit },
+   { "reboot", "/usr/bin/gksu /sbin/reboot" },
+   { "hibernate", "/usr/bin/gksu /sbin/pm-hibernate"},
+   { "shutdown", "/usr/bin/gksu /sbin/halt" },
+}
+favorites_menu = {
+  { "chromium", "/usr/bin/chromium-browser" },
+  { "thunderbird", "/usr/bin/thunderbird", "/usr/share/pixmaps/thunderbird.xpm"},
+  { "pidgin", "/usr/bin/pidgin" },
+  { "skype", "/usr/bin/skype" },
+  { "teamviewer", "/usr/bin/teamviewer" },
+  { "vmware", "/usr/bin/vmware" },
+  { "sublime", "sublime_text" },
+  { "wireshark","/usr/bin/wireshark","/usr/share/pixmaps/wsicon32.xpm"},
+  { "eclipse","eclipse" },
+  { "nautilus", "/usr/bin/nautilus" },
+}
 
-   mymainmenu = awful.menu.new({ items = menu_items, width = 150 })
-   mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,	 menu = mymainmenu })
--- desktop icons
-   require('freedesktop.desktop')
-   for s = 1, screen.count() do
-	freedesktop.desktop.add_applications_icons({screen = s, showlabels = true})
-	freedesktop.desktop.add_dirs_and_files_icons({screen = s, showlabels = true})
-   end
--- }}}
+mymainmenu = awful.menu(
+{ items = 
+  { 
+    { "favorites", favorites_menu },
+    { "utils", utils_menu },
+    { "office", office_menu },
+    { "awesome", myawesomemenu, beautiful.awesome_icon },
+  }
+})
+mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
+                                     menu = mymainmenu })
 
 -- {{{ Wibox
 --widget separator
@@ -211,18 +214,6 @@ batwidget:set_background_text_color("#FFFFFFA0")
 batwidget:set_text_color("#000000")
 vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
 
---shutdown widget
-    shutdown=blingbling.system.shutdownmenu(beautiful.shutdown, 
-                                            beautiful.accept, 
-                                            beautiful.cancel)
-    shutdown.resize= false
-    awful.widget.layout.margins[shutdown]={top=4}
---reboot widget
-    reboot=blingbling.system.rebootmenu(beautiful.reboot, 
-                                        beautiful.accept, 
-                                        beautiful.cancel)
-    reboot.resize = false
-    awful.widget.layout.margins[reboot]={top=4}
     -- Date
     datewidget = widget({ type = "textbox" })
     --vicious.register(datewidget, vicious.widgets.date, "<span color=\""..beautiful.text_font_color_1.."\" "..pango_small..">%R</span>", 60)
@@ -402,12 +393,6 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
 	          separator,
             layout = awful.widget.layout.horizontal.leftright
         },
-	      separator,
-        shutdown,
-        separator,
-        reboot,
-        separator,
-
         separator,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft

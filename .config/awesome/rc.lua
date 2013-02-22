@@ -65,7 +65,7 @@ naughty.config.presets.normal.border_color     = beautiful.notify_border
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ "1⇋ Main", "2⇋ Alt", "3⇋ Virtual", "4⇋ Comm", "5⇋ Misc", "6⇋ Misc"}, s, layouts[1])
+    tags[s] = awful.tag({ "1⇋ MAIN", "2⇋ ALT", "3⇋ VM", "4⇋ COMM", "5⇋ MISC", "6⇋ MISC"}, s, layouts[1])
 end
 --
 -- {{{ Menu
@@ -228,7 +228,7 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
   cpu:set_height(widget_height)
   cpu:set_width(75)
   cpu:set_show_text(true)
-  cpu:set_label("Load: $percent %")
+  cpu:set_label("$percent %")
   cpu:set_graph_color("#00ccff00")
   --Use transparency on graph line color to reduce the width of line with low resolution screen
   cpu:set_graph_line_color("#ff330088")
@@ -309,7 +309,7 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
 
 --disk usage widget
   fsrootlabel= widget({ type = "textbox", name = "fsrootlabel" })
-  fsrootlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>disk: </span>'
+  fsrootlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>DISK: </span>'
   fsroot = blingbling.value_text_box.new()
   fsroot:set_width(25)
   fsroot:set_height(widget_height)

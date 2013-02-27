@@ -41,6 +41,7 @@ modkey = "Mod4"
 
 --Lancement d'applications
 run_once("nm-applet")
+run_once("gnome-sound-applet")
 run_once("udisks-glue")
 ---- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =

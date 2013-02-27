@@ -90,7 +90,7 @@ myawesomemenu = {
    { "reload", awesome.restart },
    { "logout", awesome.quit },
    { "reboot", "/usr/bin/gksu /sbin/reboot" },
-   { "hibernate", "/usr/bin/gksu /sbin/pm-hibernate"},
+   { "hibernate", "gksu pm-hibernate"},
    { "shutdown", "/usr/bin/gksu /sbin/halt" },
 }
 favorites_menu = {
@@ -103,7 +103,7 @@ favorites_menu = {
   { "sublime", "sublime_text" },
   { "wireshark","/usr/bin/wireshark","/usr/share/pixmaps/wsicon32.xpm"},
   { "eclipse","eclipse" },
-  { "nautilus", "/usr/bin/nautilus" },
+  { "nautilus", "/usr/bin/nautilus --no-desktop" },
 }
 
 mymainmenu = awful.menu(

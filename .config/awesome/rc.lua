@@ -94,24 +94,25 @@ myawesomemenu = {
    { "shutdown", "/usr/bin/gksu /sbin/halt" },
 }
 favorites_menu = {
-  { "chromium", "/usr/bin/chromium-browser" },
+  { "chromium", "/usr/bin/chromium-browser", "/usr/share/pixmaps/chromium-browser.png" },
   { "thunderbird", "/usr/bin/thunderbird", "/usr/share/pixmaps/thunderbird.xpm"},
-  { "pidgin", "/usr/bin/pidgin" },
-  { "skype", "/usr/bin/skype" },
-  { "teamviewer", "/usr/bin/teamviewer" },
-  { "vmware", "/usr/bin/vmware" },
-  { "sublime", "sublime_text" },
+  { "pidgin", "/usr/bin/pidgin", "/usr/share/app-install/icons/pidgin.png" },
+  { "skype", "/usr/bin/skype", "/usr/share/icons/skype.png" },
+  { "teamviewer", "/usr/bin/teamviewer", "/opt/teamviewer8/tv_bin/desktop/teamviewer.png" },
+  { "vmware", "/usr/bin/vmware", "/usr/share/icons/hicolor/48x48/apps/vmware-workstation.png" },
+  { "sublime", "sublime_text", "/home/gabe/bin/Sublime Text 2/Icon/32x32/sublime_text.png" },
   { "wireshark","/usr/bin/wireshark","/usr/share/pixmaps/wsicon32.xpm"},
-  { "eclipse","eclipse" },
-  { "nautilus", "/usr/bin/nautilus --no-desktop" },
+  { "eclipse","eclipse", "/home/gabe/bin/adt-bundle-linux-x86_64/eclipse/icon.xpm" },
+  { "pithos", "pithos", "/usr/share/app-install/icons/pithos.png" },
+  { "nautilus", "/usr/bin/nautilus --no-desktop", "/usr/share/pixmaps/nautilus.xpm" },
 }
 
 mymainmenu = awful.menu(
 { items = 
   { 
-    { "favorites", favorites_menu },
-    { "utils", utils_menu },
-    { "office", office_menu },
+    { "favorites", favorites_menu, "/home/gabe/.icons/favorites.png" },
+    { "utils", utils_menu, "/home/gabe/.icons/utils.png" },
+    { "office", office_menu, "/home/gabe/.icons/office.png" },
     { "awesome", myawesomemenu, beautiful.awesome_icon },
   }
 })

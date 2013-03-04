@@ -24,8 +24,7 @@ home   = os.getenv("HOME")
 --get XDG_CONFIG
 config_dir = awful.util.getdir("config")
 -- Themes define colours, icons, and wallpapers
---beautiful.init( config_dir .. "/current_theme/theme.lua")
-beautiful.init("/usr/share/awesome/themes/black_blue/theme.lua")
+beautiful.init( config_dir .. "/current_theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "gnome-terminal"

@@ -67,13 +67,15 @@ for s = 1, screen.count() do
     -- Each screen has its own tag table.
     tags[s] = awful.tag({ "1⇋ MAIN", "2⇋ ALT", "3⇋ VM", "4⇋ COMM", "5⇋ MISC", "6⇋ MISC"}, s, layouts[1])
 end
+
 --
 -- {{{ Menu
+icon_dir = config_dir.."/icons"
 -- Create a laucher widget and a main menu
 office_menu = {
-	{"LibreOffice Calc","/usr/bin/libreoffice --calc","/usr/share/icons/hicolor/32x32/apps/libreoffice-calc.xpm"},
-	{"LibreOffice Impress","/usr/bin/libreoffice --impress","/usr/share/icons/hicolor/32x32/apps/libreoffice-impress.xpm"},
-	{"LibreOffice Writer","/usr/bin/libreoffice --writer","/usr/share/icons/hicolor/32x32/apps/libreoffice-writer.xpm"},
+	{"LibreOffice Calc","/usr/bin/libreoffice --calc",icon_dir.."/libreoffice-calc.xpm"},
+	{"LibreOffice Impress","/usr/bin/libreoffice --impress",icon_dir.."/libreoffice-impress.xpm"},
+	{"LibreOffice Writer","/usr/bin/libreoffice --writer",icon_dir.."/libreoffice-writer.xpm"},
 }
 utils_menu = {
 	{"aRandR","/usr/bin/arandr"},
@@ -94,25 +96,25 @@ myawesomemenu = {
    { "shutdown", "/usr/bin/gksu /sbin/halt" },
 }
 favorites_menu = {
-  { "chromium", "/usr/bin/chromium-browser", "/usr/share/pixmaps/chromium-browser.png" },
-  { "thunderbird", "/usr/bin/thunderbird", "/usr/share/pixmaps/thunderbird.xpm"},
-  { "pidgin", "/usr/bin/pidgin", "/usr/share/app-install/icons/pidgin.png" },
-  { "skype", "/usr/bin/skype", "/usr/share/icons/skype.png" },
-  { "teamviewer", "/usr/bin/teamviewer", "/opt/teamviewer8/tv_bin/desktop/teamviewer.png" },
-  { "vmware", "/usr/bin/vmware", "/usr/share/icons/hicolor/48x48/apps/vmware-workstation.png" },
-  { "sublime", "sublime_text", "/home/gabe/bin/Sublime Text 2/Icon/32x32/sublime_text.png" },
-  { "wireshark","/usr/bin/wireshark","/usr/share/pixmaps/wsicon32.xpm"},
-  { "eclipse","eclipse", "/home/gabe/bin/adt-bundle-linux-x86_64/eclipse/icon.xpm" },
-  { "pithos", "pithos", "/usr/share/app-install/icons/pithos.png" },
-  { "nautilus", "/usr/bin/nautilus --no-desktop", "/usr/share/pixmaps/nautilus.xpm" },
+  { "chromium", "/usr/bin/chromium-browser", icon_dir.."/chromium-browser.xpm" },
+  { "thunderbird", "/usr/bin/thunderbird", icon_dir.."/thunderbird.xpm"},
+  { "pidgin", "/usr/bin/pidgin", icon_dir.."/pidgin.xpm" },
+  { "skype", "/usr/bin/skype", icon_dir.."/skype.xpm" },
+  { "teamviewer", "/usr/bin/teamviewer", icon_dir.."/teamviewer.xpm" },
+  { "vmware", "/usr/bin/vmware", icon_dir.."/vmware-workstation.xpm" },
+  { "sublime", "sublime_text", icon_dir.."/sublime_text.xpm" },
+  { "wireshark","/usr/bin/wireshark",icon_dir.."/wireshark.xpm"},
+  { "eclipse","eclipse", icon_dir.."/eclipse.xpm" },
+  { "pithos", "pithos", icon_dir.."/pithos.xpm" },
+  { "nautilus", "/usr/bin/nautilus --no-desktop", icon_dir.."/nautilus.xpm" },
 }
 
 mymainmenu = awful.menu(
 { items = 
   { 
-    { "favorites", favorites_menu, "/home/gabe/.icons/favorites.png" },
-    { "utils", utils_menu, "/home/gabe/.icons/utils.png" },
-    { "office", office_menu, "/home/gabe/.icons/office.png" },
+    { "favorites", favorites_menu, icon_dir.."/favorites.xpm" },
+    { "utils", utils_menu, icon_dir.."/utils.xpm" },
+    { "office", office_menu, icon_dir.."/office.xpm" },
     { "awesome", myawesomemenu, beautiful.awesome_icon },
   }
 })

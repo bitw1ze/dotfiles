@@ -202,6 +202,19 @@ mysystray = widget({ type = "systray" })
 require("blingbling")
 
 local widget_height = 22 
+batwidget = widget({type = "textbox"})
+batwidget=blingbling.progress_bar.new()
+batwidget:set_height(widget_height)
+batwidget:set_width(50)
+batwidget:set_horizontal(true)
+batwidget:set_show_text(true)
+batwidget:set_font_size(10)
+batwidget:set_label("$percent%")
+batwidget:set_graph_color("#1AE000")
+batwidget:set_background_graph_color("#FF0000")
+batwidget:set_background_text_color("#FFFFFFA0")
+batwidget:set_text_color("#000000")
+vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
 
     -- Date
     datewidget = widget({ type = "textbox" })
@@ -345,6 +358,7 @@ local widget_height = 22
                 fsrootlabel,
                 fsroot.widget,
                 separator,
+                batwidget,
                 separator,
 --                mpdlabel,
 --                separator,

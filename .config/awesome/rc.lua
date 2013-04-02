@@ -43,6 +43,7 @@ run_once("nm-applet")
 run_once("gnome-sound-applet")
 run_once("udisks-glue")
 run_once("xautolock -time 1 -locker 'gnome-screensaver-command --lock'")
+run_once("xmodmap /home/gabe/.speedswapper")
 ---- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
@@ -534,7 +535,7 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
+      properties = { border_width = 2,
                      border_color = beautiful.border_normal,
                      focus = true,
                      keys = clientkeys,
@@ -543,8 +544,6 @@ awful.rules.rules = {
       properties = { tag = tags[1][4], switchtotag = false } },
     { rule = { class = "Pidgin"},
       properties = { tag = tags[1][4], switchtotag = false } },
-    { rule = { class = "Firefox"},
-      properties = { tag = tags[1][5], switchtotag = false } },
     { rule = { class = "Chromium"},
       properties = { tag = tags[1][2], switchtotag = true } },
     { rule = { class = "Eclipse" },

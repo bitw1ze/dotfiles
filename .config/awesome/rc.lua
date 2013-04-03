@@ -43,7 +43,7 @@ run_once("nm-applet")
 run_once("gnome-sound-applet")
 run_once("udisks-glue")
 run_once("xautolock -time 1 -locker 'gnome-screensaver-command --lock'")
-run_once("xmodmap /home/gabe/.speedswapper")
+awful.util.spawn_with_shell("xmodmap /home/gabe/.speedswapper")
 ---- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {

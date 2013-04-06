@@ -91,12 +91,11 @@ map <F3> :w<CR> :make view<CR>
 map <F4> :NERDTreeToggle<CR>
 map ** gwap #line wrap
 map <F5> :set paste!<CR>
-map <F6> :set paste<CR>i<CR>%---<CR>\vtitle{}<CR>\vid{}<CR>\vclass{}<CR>\vseverity{}<CR>\vdifficulty{}<CR>\vuln<CR><CR>\vtargets<CR><CR>\vdesc<CR><CR>\vscenario<CR><CR>\vshortterm<CR><CR>\vlongterm<CR><CR>\pagebreak<CR><C-c>:set nopaste<CR>
+map <F6> :set paste<CR>i<CR>%---<CR>\pagebreak<CR>\vtitle{}<CR>\vid{}<CR>\vclass{}<CR>\vseverity{}<CR>\vdifficulty{}<CR>\vuln<CR><CR>\vtargets<CR><CR>\vdesc<CR><CR>\vscenario<CR><CR>\vshortterm<CR><CR>\vlongterm<CR><C-c>:set nopaste<CR>
 
-syntax on
-filetype indent on
+filetype plugin indent on
 set autoindent
-set nu
+set nonu
 set ic
 set hls
 set lbr
@@ -115,3 +114,45 @@ nmap j gj
 nmap k gk
 
 colorscheme desert
+
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+"
+" original repos on github
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'tpope/vim-rails.git'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+"Bundle 'garbas/vim-snipmate'
+Bundle 'vim-scripts/OmniCppComplete'
+Bundle 'vim-scripts/taglist.vim'
+
+" vim-scripts repos
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+" ...
+
+filetype plugin indent on     " required!
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..

@@ -134,6 +134,13 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
+
+" snipmate dependencies
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "honza/vim-snippets"
+Bundle 'garbas/vim-snipmate'
+
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -141,7 +148,6 @@ Bundle 'tpope/vim-rails.git'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
-"Bundle 'garbas/vim-snipmate'
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'vim-scripts/taglist.vim'
 

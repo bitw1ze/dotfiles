@@ -42,6 +42,7 @@ map <F10> :set paste<CR>
 map <F11> :set nopaste<CR>
 imap <F10> <C-O>:set paste<CR>
 imap <F11> <nop>
+let g:LatexBox_quickfix           =0
 set pastetoggle=<F11>
 if has("autocmd")
   let bash_is_sh=1
@@ -70,6 +71,11 @@ if has("autocmd")
     \ if line("'\"") > 0 && line("'\"") <= line("$") | 
     \   exe "normal g`\"" | 
     \ endif 
+
+  augroup latex
+    au BufWritePost
+          \ *.tex
+          \ Latexmk 
 
 endif 
 

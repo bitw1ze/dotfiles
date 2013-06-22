@@ -27,7 +27,7 @@ config_dir = awful.util.getdir("config")
 beautiful.init( config_dir .. "/current_theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "gnome-terminal"
+terminal = "rxvt-unicode"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 browser="chromium-browser"

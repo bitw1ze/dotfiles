@@ -134,11 +134,11 @@ let g:tex_flavor="latex"
 
 map <F8> :w<CR> :make<CR>
 map <F2> :set number!<CR> :set foldcolumn=0<CR>
-map <F3> :w<CR> :make view<CR>
+map <F3> :set rnu!<CR>
+"map <F3> :w<CR> :make view<CR>
 map <F4> :NERDTreeToggle<CR>
 map ** gwap #line wrap
 map <F5> :set paste!<CR>
-map <F6> :set paste<CR>i<CR>%---<CR>\pagebreak<CR>\vtitle{}<CR>\vid{}<CR>\vclass{}<CR>\vseverity{}<CR>\vdifficulty{}<CR>\vuln<CR><CR>\vtargets<CR><CR>\vdesc<CR><CR>\vscenario<CR><CR>\vshortterm<CR><CR>\vlongterm<CR><C-c>:set nopaste<CR>
 
 filetype plugin indent on
 set autoindent

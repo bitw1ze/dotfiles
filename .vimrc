@@ -1,5 +1,51 @@
-set nocompatible      
+set nocompatible               " be iMproved
+filetype off                   " required!
 
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+"
+" original repos on github
+
+" snipmate dependencies
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "honza/vim-snippets"
+Bundle 'garbas/vim-snipmate'
+
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'tpope/vim-rails.git'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Bundle 'vim-scripts/OmniCppComplete'
+Bundle 'vim-scripts/taglist.vim'
+
+" vim-scripts repos
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+" ...
+
+filetype plugin indent on     " required!
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+set nocompatible      
 
 set background=dark     
 set wrap              
@@ -10,7 +56,6 @@ set showcmd
 set ruler               
 set title               
 set wildmenu            
-
 
 set esckeys             
 set ignorecase          
@@ -111,60 +156,13 @@ nnoremap map <silent> <F9> :NERDTreeToggle<CR>
 map <silent> <F8> :TlistToggle<CR>
 nnoremap map <silent> <F8> :TlistToggle<CR>
 
-set expandtab
-set ts=2
-
-set tags=tags;
+set tags=.tags;
 
 nmap j gj
 nmap k gk
 
 colorscheme desert
-
-set nocompatible               " be iMproved
-filetype off                   " required!
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-
-" My Bundles here:
-"
-" original repos on github
-
-" snipmate dependencies
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "honza/vim-snippets"
-Bundle 'garbas/vim-snipmate'
-
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
-Bundle 'vim-scripts/OmniCppComplete'
-Bundle 'vim-scripts/taglist.vim'
-
-" vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-" non github repos
-Bundle 'git://git.wincent.com/command-t.git'
-" ...
-
-filetype plugin indent on     " required!
-"
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+set cursorline
+:hi CursorLine   cterm=NONE ctermbg=darkgray guibg=darkgray guifg=white
+:hi CursorColumn cterm=NONE ctermbg=darkgray guibg=darkgray guifg=white
+:nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>

@@ -204,19 +204,34 @@ mysystray = widget({ type = "systray" })
 require("blingbling")
 
 local widget_height = 22 
-batwidget = widget({type = "textbox"})
-batwidget=blingbling.progress_bar.new()
-batwidget:set_height(widget_height)
-batwidget:set_width(50)
-batwidget:set_horizontal(true)
-batwidget:set_show_text(true)
-batwidget:set_font_size(10)
-batwidget:set_label("$percent%")
-batwidget:set_graph_color("#1AE000")
-batwidget:set_background_graph_color("#FF0000")
-batwidget:set_background_text_color("#FFFFFFA0")
-batwidget:set_text_color("#000000")
-vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
+bat0widget = widget({type = "textbox"})
+bat0widget=blingbling.progress_bar.new()
+bat0widget:set_height(widget_height)
+bat0widget:set_width(75)
+bat0widget:set_horizontal(true)
+bat0widget:set_show_text(true)
+bat0widget:set_font_size(10)
+bat0widget:set_label("$percent%")
+bat0widget:set_graph_color("#CCCCCC")
+bat0widget:set_background_graph_color("#00A0FF")
+bat0widget:set_background_text_color("#FFFFFFA0")
+bat0widget:set_text_color("#000000")
+vicious.register(bat0widget, vicious.widgets.bat, "$2", 60, "BAT0")
+
+bat1widget = widget({type = "textbox"})
+bat1widget=blingbling.progress_bar.new()
+bat1widget:set_height(widget_height)
+bat1widget:set_width(50)
+bat1widget:set_horizontal(true)
+bat1widget:set_show_text(true)
+bat1widget:set_font_size(10)
+bat1widget:set_label("$percent%")
+bat1widget:set_graph_color("#CCCCCC")
+bat1widget:set_background_graph_color("#0000FF")
+bat1widget:set_background_text_color("#FFFFFFA0")
+bat1widget:set_text_color("#000000")
+vicious.register(bat1widget, vicious.widgets.bat, "$2", 60, "BAT1")
+
 
     -- Date
     datewidget = widget({ type = "textbox" })
@@ -360,7 +375,9 @@ vicious.register(batwidget, vicious.widgets.bat, "$2", 60, "BAT0")
                 fsrootlabel,
                 fsroot.widget,
                 separator,
-                batwidget,
+                bat0widget,
+                separator,
+                bat1widget,
                 separator,
 --                mpdlabel,
 --                separator,

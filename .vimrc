@@ -66,13 +66,10 @@ set magic
 set bs=indent,eol,start 
 set nobackup            
 
-set tabstop=2           
-set shiftwidth=2        
-
-
-
+set tabstop=4
+set shiftwidth=4
+set expandtab
 set fileformat=unix     
-
 
 set viminfo='20,\"500   
 set hidden              
@@ -83,26 +80,23 @@ if &t_Co > 2 || has("gui_running")
   set nohlsearch       
   set incsearch      
 endif
-map <F10> :set paste<CR>
-map <F11> :set nopaste<CR>
-imap <F10> <C-O>:set paste<CR>
-imap <F11> <nop>
-let g:LatexBox_quickfix           =0
+map <F10> :noh<CR>
+"let g:LatexBox_quickfix           =0
 set pastetoggle=<F11>
 if has("autocmd")
   let bash_is_sh=1
   autocmd BufEnter * lcd %:p:h
 
   
-  augroup vdboor
-    au BufReadPre,BufNewFile
-    \ *.xsl,*.xml,*.css,*.html,*.js,*.php,*.sql,*.sh,*.conf,*.cc,*.cpp,*.h
-    \  set smartindent shiftwidth=2 softtabstop=2 expandtab
-
-    au BufReadPre,BufNewFile
-    \ *.tex
-    \ set wrap shiftwidth=2 softtabstop=2 expandtab
-  augroup END
+"  augroup vdboor
+"    au BufReadPre,BufNewFile
+"    \ *.xsl,*.xml,*.css,*.html,*.js,*.php,*.sql,*.sh,*.conf,*.cc,*.cpp,*.h
+"    \  set smartindent shiftwidth=2 softtabstop=2 expandtab
+"
+"    au BufReadPre,BufNewFile
+"    \ *.tex
+"    \ set wrap shiftwidth=2 softtabstop=2 expandtab
+"  augroup END
 
   augroup perl
     " reset (disable previous 'augroup perl' settings)
@@ -118,9 +112,11 @@ if has("autocmd")
     \ endif 
 
   augroup latex
-    au BufWritePost
-          \ *.tex
-          \ Latexmk 
+      set tabstop=2 shiftwidth=2
+
+  augroup python
+      set tabstop=4 shiftwidth=4
+
 
 endif 
 

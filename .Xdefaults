@@ -27,3 +27,27 @@ aterm*color12: #5f5fee
 aterm*color13: #bb88dd
 aterm*color14: #4eb4fa
 aterm*color15: #d0d0d0
+
+! urxvt stuff
+URxvt.font: xft:DejaVu Sans Mono-9
+URxvt.letterSpace: -1
+URxvt.urgentOnBell: True
+URxvt.foreground: #ffffff
+URxvt.background: #000000
+URxvt.scrollBar: False
+URxvt.transparent: True
+URxvt.shading: 15
+URxvt.releasestring: rxvt
+URxvt.fading: 40
+!URxvt.fadeColor: #000000
+URxvt.skipScroll: True
+
+! Xfont stuff
+Xft.antialias: true
+Xft.hinting: true
+Xft.hintstyle: hintlight
+Xft.rgba: rgb
+
+! XURxvt.perl-ext-common: ...,keyboard-select
+! URxvt.keysym.M-Escape: perl:keyboard-select:activate
+! ft.dpi: 96

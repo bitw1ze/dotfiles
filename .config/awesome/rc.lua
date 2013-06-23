@@ -210,48 +210,19 @@ mysystray = widget({ type = "systray" })
 --test oocairo
 require("blingbling")
 
-local widget_height = 22 
-bat0widget = widget({type = "textbox"})
-bat0widget=blingbling.progress_bar.new()
-bat0widget:set_height(widget_height)
-bat0widget:set_width(75)
-bat0widget:set_horizontal(true)
-bat0widget:set_show_text(true)
-bat0widget:set_font_size(10)
-bat0widget:set_label("$percent%")
-bat0widget:set_graph_color("#CCCCCC")
-bat0widget:set_background_graph_color("#00A0FF")
-bat0widget:set_background_text_color("#FFFFFFA0")
-bat0widget:set_text_color("#000000")
-vicious.register(bat0widget, vicious.widgets.bat, "$2", 60, "BAT0")
-
-bat1widget = widget({type = "textbox"})
-bat1widget=blingbling.progress_bar.new()
-bat1widget:set_height(widget_height)
-bat1widget:set_width(50)
-bat1widget:set_horizontal(true)
-bat1widget:set_show_text(true)
-bat1widget:set_font_size(10)
-bat1widget:set_label("$percent%")
-bat1widget:set_graph_color("#CCCCCC")
-bat1widget:set_background_graph_color("#0000FF")
-bat1widget:set_background_text_color("#FFFFFFA0")
-bat1widget:set_text_color("#000000")
-vicious.register(bat1widget, vicious.widgets.bat, "$2", 60, "BAT1")
-
-
     -- Date
     datewidget = widget({ type = "textbox" })
     --vicious.register(datewidget, vicious.widgets.date, "<span color=\""..beautiful.text_font_color_1.."\" "..pango_small..">%R</span>", 60)
 
     mytextclock = awful.widget.textclock({ align = "right" }, "<span color='white'>%I:%M%p</span>", 60)
 
-
+  widget_height = 25
+  font_size = 10
  --Cpu widget 
   cpulabel= widget({ type = "textbox" })
   cpulabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..' '..pango_bold..'>CPU: </span>'
   cpu=blingbling.classical_graph.new()
-  cpu:set_font_size(8)
+  cpu:set_font_size(font_size)
   cpu:set_height(widget_height)
   cpu:set_width(75)
   cpu:set_show_text(true)
@@ -271,7 +242,7 @@ vicious.register(bat1widget, vicious.widgets.bat, "$2", 60, "BAT1")
   memlabel.text='<span color="'..beautiful.textbox_widget_as_label_font_color..'" '..pango_small..'>MEM: </span>'
   
   memwidget = blingbling.classical_graph.new()
-  memwidget:set_font_size(8)
+  memwidget:set_font_size(font_size)
   memwidget:set_height(widget_height)
   memwidget:set_h_margin(2)
   memwidget:set_width(75)
@@ -328,10 +299,10 @@ vicious.register(bat1widget, vicious.widgets.bat, "$2", 60, "BAT1")
 --Calendar widget
   my_cal =blingbling.calendar.new({type = "imagebox", image = beautiful.calendar})
   my_cal:set_cell_padding(2)
-  my_cal:set_title_font_size(9)
-  my_cal:set_font_size(10)
+  my_cal:set_title_font_size(font_size)
+  my_cal:set_font_size(font_size+1)
   my_cal:set_inter_margin(1)
-  my_cal:set_columns_lines_titles_font_size(8)
+  my_cal:set_columns_lines_titles_font_size(font_size-1)
   my_cal:set_columns_lines_titles_text_color("#d4aa00ff")
 
 --disk usage widget
@@ -344,7 +315,7 @@ vicious.register(bat1widget, vicious.widgets.bat, "$2", 60, "BAT1")
   fsroot:set_filled_color("#00000099")
   fsroot:set_rounded_size(0.6)
   fsroot:set_values_text_color({{"#88aa00ff",0},{"#d4aa00ff", 0.5},{"#d45500ff",0.75}})
-  fsroot:set_font_size(8)
+  fsroot:set_font_size(font_size)
   fsroot:set_background_color("#00000044")
   fsroot:set_label("$percent%")
   vicious.register(fsroot, vicious.widgets.fs, "${/ used_p}", 120 )
@@ -381,10 +352,6 @@ vicious.register(bat1widget, vicious.widgets.bat, "$2", 60, "BAT1")
                 separator,
                 fsrootlabel,
                 fsroot.widget,
-                separator,
-                bat0widget,
-                separator,
-                bat1widget,
                 separator,
 --                mpdlabel,
 --                separator,

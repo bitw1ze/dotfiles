@@ -27,7 +27,7 @@ config_dir = awful.util.getdir("config")
 beautiful.init( config_dir .. "/current_theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "gnome-terminal"
+terminal = "rxvt-unicode"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 browser="chromium-browser"
@@ -211,6 +211,34 @@ mysystray = widget({ type = "systray" })
 require("blingbling")
 
 local widget_height = 22 
+bat0widget = widget({type = "textbox"})
+bat0widget=blingbling.progress_bar.new()
+bat0widget:set_height(widget_height)
+bat0widget:set_width(75)
+bat0widget:set_horizontal(true)
+bat0widget:set_show_text(true)
+bat0widget:set_font_size(10)
+bat0widget:set_label("$percent%")
+bat0widget:set_graph_color("#CCCCCC")
+bat0widget:set_background_graph_color("#00A0FF")
+bat0widget:set_background_text_color("#FFFFFFA0")
+bat0widget:set_text_color("#000000")
+vicious.register(bat0widget, vicious.widgets.bat, "$2", 60, "BAT0")
+
+bat1widget = widget({type = "textbox"})
+bat1widget=blingbling.progress_bar.new()
+bat1widget:set_height(widget_height)
+bat1widget:set_width(50)
+bat1widget:set_horizontal(true)
+bat1widget:set_show_text(true)
+bat1widget:set_font_size(10)
+bat1widget:set_label("$percent%")
+bat1widget:set_graph_color("#CCCCCC")
+bat1widget:set_background_graph_color("#0000FF")
+bat1widget:set_background_text_color("#FFFFFFA0")
+bat1widget:set_text_color("#000000")
+vicious.register(bat1widget, vicious.widgets.bat, "$2", 60, "BAT1")
+
 
     -- Date
     datewidget = widget({ type = "textbox" })
@@ -354,6 +382,9 @@ local widget_height = 22
                 fsrootlabel,
                 fsroot.widget,
                 separator,
+                bat0widget,
+                separator,
+                bat1widget,
                 separator,
 --                mpdlabel,
 --                separator,
@@ -546,8 +577,6 @@ awful.rules.rules = {
       properties = { tag = tags[1][4], switchtotag = false } },
     { rule = { class = "Chromium"},
       properties = { tag = tags[1][2], switchtotag = true } },
-    { rule = { class = "Eclipse" },
-      properties = { tag = tags[1][3], switchtotag = true } },
     { rule = { instance = "virtualbox" },
       properties = { tag = tags[1][3], switchtotag = false} },
     { rule = { instance = "vmware" },

@@ -1,5 +1,55 @@
-set nocompatible      
+set nocompatible               " be iMproved
+filetype off                   " required!
 
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+"
+" original repos on github
+
+" snipmate dependencies
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "honza/vim-snippets"
+Bundle 'garbas/vim-snipmate'
+
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'tpope/vim-rails.git'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Bundle 'vim-scripts/OmniCppComplete'
+Bundle 'vim-scripts/taglist.vim'
+" haskell plugin settings
+"au BufEnter *.hs compiler ghc
+"let g:haddock_browser="/usr/bin/chromium-browser"
+"let g:haddock_docdir="/usr/share/haddock-2.11.0/html/"
+
+" vim-scripts repos
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+" ...
+
+filetype plugin indent on     " required!
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+set nocompatible      
 
 set background=dark     
 set wrap              
@@ -10,7 +60,6 @@ set showcmd
 set ruler               
 set title               
 set wildmenu            
-
 
 set esckeys             
 set ignorecase          
@@ -35,25 +84,23 @@ if &t_Co > 2 || has("gui_running")
   set nohlsearch       
   set incsearch      
 endif
-map <F10> :set paste<CR>
-map <F11> :set nopaste<CR>
-imap <F10> <C-O>:set paste<CR>
-imap <F11> <nop>
+map <F10> :noh<CR>
+"let g:LatexBox_quickfix           =0
 set pastetoggle=<F11>
 if has("autocmd")
   let bash_is_sh=1
   autocmd BufEnter * lcd %:p:h
 
   
-  augroup vdboor
-    au BufReadPre,BufNewFile
-    \ *.xsl,*.xml,*.css,*.html,*.js,*.php,*.sql,*.sh,*.conf,*.cc,*.cpp,*.h
-    \  set smartindent shiftwidth=2 softtabstop=2 expandtab
-
-    au BufReadPre,BufNewFile
-    \ *.tex
-    \ set wrap shiftwidth=2 softtabstop=2 expandtab
-  augroup END
+"  augroup vdboor
+"    au BufReadPre,BufNewFile
+"    \ *.xsl,*.xml,*.css,*.html,*.js,*.php,*.sql,*.sh,*.conf,*.cc,*.cpp,*.h
+"    \  set smartindent shiftwidth=2 softtabstop=2 expandtab
+"
+"    au BufReadPre,BufNewFile
+"    \ *.tex
+"    \ set wrap shiftwidth=2 softtabstop=2 expandtab
+"  augroup END
 
   augroup perl
     " reset (disable previous 'augroup perl' settings)
@@ -67,6 +114,13 @@ if has("autocmd")
     \ if line("'\"") > 0 && line("'\"") <= line("$") | 
     \   exe "normal g`\"" | 
     \ endif 
+
+  augroup latex
+      set tabstop=2 shiftwidth=2
+
+  augroup python
+      set tabstop=4 shiftwidth=4
+
 
 endif 
 
@@ -84,11 +138,11 @@ let g:tex_flavor="latex"
 
 map <F8> :w<CR> :make<CR>
 map <F2> :set number!<CR> :set foldcolumn=0<CR>
-map <F3> :w<CR> :make view<CR>
+map <F3> :set rnu!<CR>
+"map <F3> :w<CR> :make view<CR>
 map <F4> :NERDTreeToggle<CR>
 map ** gwap #line wrap
 map <F5> :set paste!<CR>
-map <F6> :set paste<CR>i<CR>%---<CR>\pagebreak<CR>\vtitle{}<CR>\vid{}<CR>\vclass{}<CR>\vseverity{}<CR>\vdifficulty{}<CR>\vuln<CR><CR>\vtargets<CR><CR>\vdesc<CR><CR>\vscenario<CR><CR>\vshortterm<CR><CR>\vlongterm<CR><C-c>:set nopaste<CR>
 
 filetype plugin indent on
 set autoindent
@@ -102,58 +156,19 @@ nnoremap map <silent> <F9> :NERDTreeToggle<CR>
 map <silent> <F8> :TlistToggle<CR>
 nnoremap map <silent> <F8> :TlistToggle<CR>
 
-set tags=tags;
+set tags=.tags;
 
 nmap j gj
 nmap k gk
 
 colorscheme desert
 
-set nocompatible               " be iMproved
-filetype off                   " required!
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-
-" My Bundles here:
-"
-" original repos on github
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
-"Bundle 'garbas/vim-snipmate'
-Bundle 'vim-scripts/OmniCppComplete'
-Bundle 'vim-scripts/taglist.vim'
-"Bundle 'lukerandall/haskellmode-vim'
-"Bundle 'vim-plugin-viewdoc.git'
-
-" vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-" non github repos
-Bundle 'git://git.wincent.com/command-t.git'
-" ...
-
-filetype plugin indent on     " required!
-"
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
-
 " haskell plugin settings
 "au BufEnter *.hs compiler ghc
 "let g:haddock_browser="/usr/bin/chromium-browser"
 "let g:haddock_docdir="/usr/share/haddock-2.11.0/html/"
+
+set cursorline
+:hi CursorLine   cterm=NONE ctermbg=darkgray guibg=darkgray guifg=white
+:hi CursorColumn cterm=NONE ctermbg=darkgray guibg=darkgray guifg=white
+:nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>

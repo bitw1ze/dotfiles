@@ -132,6 +132,8 @@ Bundle 'LaTeX-Box-Team/LaTeX-Box'
 "Bundle 'garbas/vim-snipmate'
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'vim-scripts/taglist.vim'
+"Bundle 'lukerandall/haskellmode-vim'
+"Bundle 'vim-plugin-viewdoc.git'
 
 " vim-scripts repos
 Bundle 'L9'
@@ -150,3 +152,8 @@ filetype plugin indent on     " required!
 "
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
+
+" haskell plugin settings
+"au BufEnter *.hs compiler ghc
+"let g:haddock_browser="/usr/bin/chromium-browser"
+"let g:haddock_docdir="/usr/share/haddock-2.11.0/html/"

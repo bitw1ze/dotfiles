@@ -21,13 +21,10 @@ set magic
 set bs=indent,eol,start 
 set nobackup            
 
-set tabstop=2           
-set shiftwidth=2        
-
-
-
+set tabstop=4
+set shiftwidth=4
+set expandtab
 set fileformat=unix     
-
 
 set viminfo='20,\"500   
 set hidden              
@@ -104,9 +101,6 @@ map <silent> <F9> :NERDTreeToggle<CR>
 nnoremap map <silent> <F9> :NERDTreeToggle<CR>
 map <silent> <F8> :TlistToggle<CR>
 nnoremap map <silent> <F8> :TlistToggle<CR>
-
-set expandtab
-set ts=2
 
 set tags=tags;
 

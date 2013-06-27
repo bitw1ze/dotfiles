@@ -38,7 +38,7 @@ URxvt.scrollBar: False
 URxvt.transparent: True
 URxvt.shading: 15
 URxvt.releasestring: rxvt
-URxvt.fading: 40
+URxvt.fading: 20
 !URxvt.fadeColor: #000000
 URxvt.skipScroll: True
 

@@ -163,17 +163,13 @@ else
     echo "'$1' is not a valid file"
 fi
 }
-alias vpn="sudo openvpn --config /home/gabe/.openvpn/config/isecpartners.com.ovpn"
-alias idump="sudo mount idump.corp.isecpartners.com:/nfs/public /mnt/idump"
-export ip="([0-9]{1,3}\.){3}[0-9]{1,3}"
+alias vpn="sudo openvpn --config $HOME/.openvpn/config/isecpartners.com.ovpn"
 alias grpe='grep'
-export PATH="$PATH:/home/gabe/bin/luatex/tex/texmf-linux-64/bin"
 alias cont='sudo pkill -SIGCONT'
+export ip="([0-9]{1,3}\.){3}[0-9]{1,3}"
 export LESSOPEN="|/usr/bin/lesspipe %s"
-
-PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
-export EDITOR="/usr/bin/vim"
-#setxkbmap -option ctrl:nocaps
+export EDITOR="$(which vim)"
 export XDG_CONFIG_HOME="$HOME/.config"
+#setxkbmap -option ctrl:nocaps
 
 set -o vi

@@ -159,6 +159,6 @@ nmap k gk
 
 colorscheme desert
 set cursorline
-:hi CursorLine   cterm=NONE ctermbg=darkgray guibg=darkgray guifg=white
-:hi CursorColumn cterm=NONE ctermbg=darkgray guibg=darkgray guifg=white
+":hi CursorLine   cterm=NONE ctermbg=white guibg=darkgray guifg=white
+:hi CursorColumn cterm=NONE ctermbg=white  guibg=darkgray guifg=white
 :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>

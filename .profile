@@ -21,7 +21,7 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-TEXLIVE=/usr/local/texlive/2012/bin/x86_64-linux
-if [ -d "$TEXLIVE" ]
+TEXLIVE="/usr/local/texlive/2012/bin/x86_64-linux"
+if [ -d "$TEXLIVE" ]; then
     PATH="$TEXLIVE:$PATH"
 fi

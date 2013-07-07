@@ -12,12 +12,6 @@ Bundle 'gmarik/vundle'
 "
 " original repos on github
 
-" snipmate dependencies
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "honza/vim-snippets"
-Bundle 'garbas/vim-snipmate'
-
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -27,13 +21,25 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'vim-scripts/taglist.vim'
+Bundle  'bling/vim-airline'
+" snipmate dependencies
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "honza/vim-snippets"
+Bundle 'garbas/vim-snipmate'
 
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+
 " non github repos
 Bundle 'git://git.wincent.com/command-t.git'
 " ...
+
+" haskell plugin settings
+"au BufEnter *.hs compiler ghc
+"let g:haddock_browser="/usr/bin/chromium-browser"
+"let g:haddock_docdir="/usr/share/haddock-2.11.0/html/"
 
 filetype plugin indent on     " required!
 "

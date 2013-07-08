@@ -27,6 +27,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'vim-scripts/taglist.vim'
+Bundle 'Lokaltog/vim-easymotion'
 
 " vim-scripts repos
 Bundle 'L9'
@@ -162,3 +163,6 @@ set cursorline
 ":hi CursorLine   cterm=NONE ctermbg=white guibg=darkgray guifg=white
 :hi CursorColumn cterm=NONE ctermbg=white  guibg=darkgray guifg=white
 :nnoremap <Leader>c :set cursorline! cursorcolumn!<CR>
+
+" Set easymotion's leader key back to default leader
+let g:EasyMotion_leader_key = '<Leader>'

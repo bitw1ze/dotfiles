@@ -26,9 +26,6 @@ if [ -d "$TEXLIVE" ]; then
     PATH="$TEXLIVE:$PATH"
 fi
 
-NDK="$HOME/bin/android-ndk"
-PATH="$NDK:$PATH"
-PATH="$HOME/bin/adt-bundle-linux-x86_64/sdk/tools:$PATH"
-PATH="$HOME/bin/android-ndk-r9/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin:$PATH"
-
 ANDROID_HOME="$HOME/bin/adt-bundle-linux-x86_64/sdk:$ANDROID_HOME"
+NDK_HOME="$HOME/bin/android-ndk-r9"
+PATH="$PATH:$HOME/bin/adt/sdk/tools:$NDK_HOME/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin/"

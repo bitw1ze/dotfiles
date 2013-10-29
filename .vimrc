@@ -23,6 +23,7 @@ Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle  'bling/vim-airline'
+Bundle 'michalbachowski/vim-wombat256mod'
 " snipmate dependencies
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -124,7 +125,6 @@ if has("autocmd")
   augroup python
       set tabstop=4 shiftwidth=4
 
-
 endif 
 
 if bufwinnr(1)
@@ -164,7 +164,7 @@ set tags=.tags;
 nmap j gj
 nmap k gk
 
-colorscheme desert
+colorscheme wombat256mod
 set cursorline
 ":hi CursorLine   cterm=NONE ctermbg=white guibg=darkgray guifg=white
 :hi CursorColumn cterm=NONE ctermbg=white  guibg=darkgray guifg=white

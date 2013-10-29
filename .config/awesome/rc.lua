@@ -545,6 +545,8 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { class = "Skype"},
       properties = { tag = tags[1][4], switchtotag = false } },
+    { rule = { class = "Steam"},
+      properties = { tag = tags[1][3], switchtotag = false } },
     { rule = { class = "Pidgin"},
       properties = { tag = tags[1][4], switchtotag = false } },
     { rule = { class = "Chromium"},

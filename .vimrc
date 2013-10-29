@@ -12,12 +12,6 @@ Bundle 'gmarik/vundle'
 "
 " original repos on github
 
-" snipmate dependencies
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "honza/vim-snippets"
-Bundle 'garbas/vim-snipmate'
-
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -31,13 +25,27 @@ Bundle 'vim-scripts/taglist.vim'
 "au BufEnter *.hs compiler ghc
 "let g:haddock_browser="/usr/bin/chromium-browser"
 "let g:haddock_docdir="/usr/share/haddock-2.11.0/html/"
+Bundle 'Lokaltog/vim-easymotion'
+Bundle  'bling/vim-airline'
+Bundle 'michalbachowski/vim-wombat256mod'
+" snipmate dependencies
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "honza/vim-snippets"
+Bundle 'garbas/vim-snipmate'
 
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+
 " non github repos
 Bundle 'git://git.wincent.com/command-t.git'
 " ...
+
+" haskell plugin settings
+"au BufEnter *.hs compiler ghc
+"let g:haddock_browser="/usr/bin/chromium-browser"
+"let g:haddock_docdir="/usr/share/haddock-2.11.0/html/"
 
 filetype plugin indent on     " required!
 "
@@ -121,7 +129,6 @@ if has("autocmd")
   augroup python
       set tabstop=4 shiftwidth=4
 
-
 endif 
 
 if bufwinnr(1)
@@ -161,13 +168,7 @@ set tags=.tags;
 nmap j gj
 nmap k gk
 
-colorscheme desert
-
-" haskell plugin settings
-"au BufEnter *.hs compiler ghc
-"let g:haddock_browser="/usr/bin/chromium-browser"
-"let g:haddock_docdir="/usr/share/haddock-2.11.0/html/"
-
+colorscheme wombat256mod
 set cursorline
 ":hi CursorLine   cterm=NONE ctermbg=white guibg=darkgray guifg=white
 :hi CursorColumn cterm=NONE ctermbg=white  guibg=darkgray guifg=white
@@ -178,3 +179,5 @@ set mouse=a
 :map <xCSI>[62~ <MouseDown>
 " etc
 " " ...
+" Set easymotion's leader key back to default leader
+let g:EasyMotion_leader_key = '<Leader>'

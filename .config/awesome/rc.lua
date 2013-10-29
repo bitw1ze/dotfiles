@@ -43,7 +43,8 @@ run_once("nm-applet")
 run_once("gnome-sound-applet")
 run_once("udisks-glue")
 run_once("xautolock",  "-time 15 -locker 'gnome-screensaver-command --lock'")
-awful.util.spawn_with_shell("xmodmap " .. home .. "/.speedswapper")
+run_once("xmodmap ", home .. "/.speedswapper")
+--awful.util.spawn_with_shell("xmodmap " .. home .. "/.speedswapper")
 ---- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
 {
@@ -420,6 +421,10 @@ globalkeys = awful.util.table.join(
                 client.focus:raise()
             end
         end),
+
+    -- Volume
+    awful.key({ modkey, "Shift"   }, "u",      function () awful.util.spawn("amixer set Master 10%+") end),
+    awful.key({ modkey, "Shift"   }, "i",      function () awful.util.spawn("amixer set Master 10%-") end),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),

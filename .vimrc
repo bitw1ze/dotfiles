@@ -21,6 +21,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'vim-scripts/taglist.vim'
+Bundle  'bling/vim-airline'
 " haskell plugin settings
 "au BufEnter *.hs compiler ghc
 "let g:haddock_browser="/usr/bin/chromium-browser"

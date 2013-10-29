@@ -21,7 +21,11 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'vim-scripts/OmniCppComplete'
 Bundle 'vim-scripts/taglist.vim'
-Bundle  'bling/vim-airline'
+Bundle 'bling/vim-airline'
+Bundle 'michalbachowski/vim-wombat256mod'
+Bundle 'xolox/vim-easytags'
+Bundle 'xolox/vim-misc'
+
 " haskell plugin settings
 "au BufEnter *.hs compiler ghc
 "let g:haddock_browser="/usr/bin/chromium-browser"
@@ -42,11 +46,6 @@ Bundle 'FuzzyFinder'
 " non github repos
 Bundle 'git://git.wincent.com/command-t.git'
 " ...
-
-" haskell plugin settings
-"au BufEnter *.hs compiler ghc
-"let g:haddock_browser="/usr/bin/chromium-browser"
-"let g:haddock_docdir="/usr/share/haddock-2.11.0/html/"
 
 filetype plugin indent on     " required!
 "
@@ -170,6 +169,7 @@ nmap j gj
 nmap k gk
 
 colorscheme wombat256mod
+
 set cursorline
 ":hi CursorLine   cterm=NONE ctermbg=white guibg=darkgray guifg=white
 :hi CursorColumn cterm=NONE ctermbg=white  guibg=darkgray guifg=white

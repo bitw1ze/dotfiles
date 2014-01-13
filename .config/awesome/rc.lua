@@ -448,6 +448,10 @@ globalkeys = awful.util.table.join(
             end
         end),
 
+    -- Volume
+    awful.key({ modkey, "Shift"   }, "u",      function () awful.util.spawn("amixer set Master 10%+") end),
+    awful.key({ modkey, "Shift"   }, "i",      function () awful.util.spawn("amixer set Master 10%-") end),
+
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),

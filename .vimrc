@@ -92,7 +92,7 @@ if &t_Co > 2 || has("gui_running")
   set nohlsearch       
   set incsearch      
 endif
-map <F10> :noh<CR>
+map <Space> :noh<CR>
 "let g:LatexBox_quickfix           =0
 set pastetoggle=<F11>
 if has("autocmd")

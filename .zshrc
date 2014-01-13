@@ -133,3 +133,6 @@ fi
 # speed up android builds
 export USE_CCACHE=1
 export sanctum="/media/fileserver/sanctum"
+
+# fix reverse tabbing
+bindkey '^[[Z' reverse-menu-complete

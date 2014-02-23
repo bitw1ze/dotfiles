@@ -114,7 +114,6 @@ alias ack='ack-grep'
 alias ccat='pygmentize -g'
 alias findn='find . -name'
 alias findi='find . -iname'
-alias myip='curl ipinfo.io'
 
 function vf () {
     if [ -n $1 ] ; then

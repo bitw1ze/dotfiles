@@ -125,6 +125,8 @@ if has("autocmd")
   augroup python
       set tabstop=4 shiftwidth=4
 
+:au BufRead *.jad set syntax=java
+
 endif 
 
 if bufwinnr(1)

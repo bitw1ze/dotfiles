@@ -16,19 +16,13 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
+export PATH="/usr/local/texlive/2012/bin/x86_64-linux:/usr/local/texlive/2012/bin/x86_64-linux:$HOME/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$HOME/bin/adt/sdk/tools:$HOME/bin/android-ndk-r9/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin/:$HOME/bin/luatex/tex/texmf-linux-64/bin:$NDK:$HOME/bin/adt-bundle-linux-x86_64/sdk/tools:$HOME/bin/android-ndk-r9/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin"
 
 TEXLIVE="/usr/local/texlive/2012/bin/x86_64-linux"
 if [ -d "$TEXLIVE" ]; then
     PATH="$TEXLIVE:$PATH"
 fi
 
-NDK="$HOME/bin/android-ndk"
-PATH="$NDK:$PATH"
-PATH="$HOME/bin/adt-bundle-linux-x86_64/sdk/tools:$PATH"
-PATH="$HOME/bin/android-ndk-r9/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin:$PATH"
-
-ANDROID_HOME="$HOME/bin/adt-bundle-linux-x86_64/sdk:$ANDROID_HOME"
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi

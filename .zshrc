@@ -51,7 +51,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH="/usr/local/texlive/2012/bin/x86_64-linux:/usr/local/texlive/2012/bin/x86_64-linux:/home/gabe/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/gabe/bin/adt/sdk/tools:/home/gabe/bin/android-ndk-r9/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/bin/:/home/gabe/bin/luatex/tex/texmf-linux-64/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # # Preferred editor for local and remote sessions
@@ -104,35 +103,54 @@ else
 fi
 }
 
-alias vpn="sudo openvpn --config /home/gabe/.openvpn/config/isecpartners.com.ovpn"
-alias idump="sudo mount idump.corp.isecpartners.com:/nfs/public /mnt/idump"
-export ip="([0-9]{1,3}\.){3}[0-9]{1,3}"
 alias grpe='grep'
-export PATH="$PATH:/home/gabe/bin/luatex/tex/texmf-linux-64/bin"
 alias cont='sudo pkill -SIGCONT'
 alias nautilus='nautlius --no-desktop'
-export LESSOPEN="|/usr/bin/lesspipe %s"
 alias x='exit'
 alias shr='shred -vzfun 8'
 alias c='clear'
+alias ash='adb shell'
+alias ack='ack-grep'
+alias ccat='pygmentize -g'
+alias findn='find . -name'
+alias findi='find . -iname'
+alias myip='curl ipinfo.io'
 
-PATH=/usr/local/texlive/2012/bin/x86_64-linux:$PATH
+function vf () {
+    if [ -n $1 ] ; then
+        $EDITOR $(find . -name $1)
+    else
+        echo 'missing search string'
+    fi
+}
+
+function vaf () {
+    if [ -n $1 ] ; then
+        $EDITOR $(find . $@)
+    else
+        echo 'missing search args'
+    fi
+}
+
+export LESSOPEN="|/usr/bin/lesspipe %s"
+export ip="([0-9]{1,3}\.){3}[0-9]{1,3}"
 export EDITOR="/usr/bin/vim"
-#setxkbmap -option ctrl:nocaps
 export XDG_CONFIG_HOME="$HOME/.config"
+export TERM=xterm-256color
+# speed up android builds
+export USE_CCACHE=1
 
 # vim keybindings in bash!
 set -o vi
-alias redirect="sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080; iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8443"
-alias ack='ack-grep'
-x=$(python -c 'from random import randint;print randint(0, 3)')
-if [ $x = "0" ]; then
-    cat $HOME/todo.txt
-fi
-
-# speed up android builds
-export USE_CCACHE=1
-export sanctum="/media/fileserver/sanctum"
 
 # fix reverse tabbing
 bindkey '^[[Z' reverse-menu-complete
+
+
+# set PATH so it includes user's private bin if it exists
+export NDK="$HOME/bin/android-ndk"
+export ANDROID_HOME="$HOME/bin/adt-bundle-linux-x86_64/sdk"
+export ANDROID_SDK=$ANDROID_HOME
+export CLASSPATH="/usr/lib/jvm/java-7-openjdk-amd64/lib/tools.jar:/usr/share/java:."
+
+source $HOME/.pvtrc

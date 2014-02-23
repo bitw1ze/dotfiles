@@ -38,6 +38,7 @@ URxvt*letterSpace: -1
 ! Scrollbar
 URxvt.scrollStyle:          rxvt
 URxvt.scrollBar:            false
+URxvt.saveLines:            12000
  
 ! Perl extensions
 URxvt.perl-ext-common:      default,matcher

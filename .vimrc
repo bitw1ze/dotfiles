@@ -82,13 +82,13 @@ set fileformat=unix
 set viminfo='20,\"500   
 set hidden              
 set history=50          
-set mouse=v             
+set mouse=a
 if &t_Co > 2 || has("gui_running")
   syntax on          
   set nohlsearch       
   set incsearch      
 endif
-map <F10> :noh<CR>
+map <Space> :noh<CR>
 "let g:LatexBox_quickfix           =0
 set pastetoggle=<F11>
 if has("autocmd")

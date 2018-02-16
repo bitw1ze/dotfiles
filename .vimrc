@@ -21,7 +21,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'vim-scripts/taglist.vim'
-Plugin  'bling/vim-airline'
+"Plugin  'bling/vim-airline'
 Plugin 'michalbachowski/vim-wombat256mod'
 " snipmate dependencies
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -37,6 +37,22 @@ Plugin 'FuzzyFinder'
 " non github repos
 Plugin 'git://git.wincent.com/command-t.git'
 " ...
+
+" swift
+Plugin 'kballard/vim-swift'
+
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'junegunn/goyo.vim'
+Plugin 'itchyny/lightline.vim'
+
+Plugin 'tpope/vim-markdown'
+Plugin 'vim-scripts/SyntaxRange'
+
+" fzf plugin
+set rtp+=/usr/local/opt/fzf
+Plugin 'junegunn/fzf.vim'
+
+Plugin 'leafgarland/typescript-vim'
 
 " haskell plugin settings
 "au BufEnter *.hs compiler ghc
@@ -168,6 +184,10 @@ nmap j gj
 nmap k gk
 
 colorscheme wombat256mod
+syntax enable
+"set background=dark
+"colorscheme solarized
+
 set cursorline
 ":hi CursorLine   cterm=NONE ctermbg=white guibg=darkgray guifg=white
 :hi CursorColumn cterm=NONE ctermbg=white  guibg=darkgray guifg=white
@@ -175,3 +195,59 @@ set cursorline
 
 " Set easymotion's leader key back to default leader
 let g:EasyMotion_leader_key = '<Leader>'
+
+" fix clipboard copy/paste with tmux
+set clipboard=unnamed
+
+:let @+ = expand("%:p")
+" copy current file name (relative/absolute) to system clipboard
+if has("mac") || has("gui_macvim") || has("gui_mac")
+  " relative path  (src/foo.txt)
+  nnoremap <leader>cf :let @*=expand("%")<CR>
+
+  " absolute path  (/something/src/foo.txt)
+  nnoremap <leader>cF :let @*=expand("%:p")<CR>
+
+  " filename       (foo.txt)
+  nnoremap <leader>ct :let @*=expand("%:t")<CR>
+
+  " directory name (/something/src)
+  nnoremap <leader>ch :let @*=expand("%:p:h")<CR>
+endif
+
+" copy current file name (relative/absolute) to system clipboard (Linux version)
+if has("gui_gtk") || has("gui_gtk2") || has("gui_gnome") || has("unix")
+  " relative path (src/foo.txt)
+  nnoremap <leader>cf :let @+=expand("%")<CR>
+
+  " absolute path (/something/src/foo.txt)
+  nnoremap <leader>cF :let @+=expand("%:p")<CR>
+
+  " filename (foo.txt)
+  nnoremap <leader>ct :let @+=expand("%:t")<CR>
+
+  " directory name (/something/src)
+  nnoremap <leader>ch :let @+=expand("%:p:h")<CR>
+endif
+
+" fzf bindings
+nmap ; :Buffers<CR>
+nmap <Leader>t :Files<CR>
+nmap <Leader>r :Tags<CR>
+
+nmap \r :!tmux send-keys -t 0:0.1 C-p C-j <CR><CR>
+
+function! ProseMode()
+  call goyo#execute(0, [])
+  set spell nolist noshowmode noshowcmd
+  set complete+=s
+  set bg=light
+  if !has('gui_running')
+    let g:solarized_termcolors=256
+  endif
+  colors solarized
+endfunction
+
+command! ProseMode call ProseMode()
+nmap \p :ProseMode<CR>
+
